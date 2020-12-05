@@ -3,33 +3,35 @@ package com.eduvation.pecontest.Class;
 import java.util.Date;
 
 public class Communication {
-    String host_email;
-    String host;
+    int host;
     int location;
     String title;
     int find_people;
     String body;
     Date created_at;
+    String category;
+    String address;
+
     public Communication(){}
-    public Communication(String host_email, String host, int location, String title, int find_people, String body, Date created_at){
-        this.host_email=host_email;
+
+    public Communication(int host, int location, String title, int find_people, String body, Date created_at, String category, String address){
         this.host=host;
         this.location=location;
         this.title=title;
         this.find_people=find_people;
         this.body=body;
         this.created_at=created_at;
+        this.category=category;
+        this.address=address;
     }
 
-    public String getHost_email() {
-        return host_email;
+    public int getHost() {
+        return host;
     }
 
-    public void setHost_email(String host_email) {
-        this.host_email = host_email;
+    public void setHost(int host) {
+        this.host = host;
     }
-
-
 
     public int getLocation() {
         return location;
@@ -63,19 +65,27 @@ public class Communication {
         this.body = body;
     }
 
-    public String getHost() {
-        return host;
-    }
-
-    public void setHost(String host) {
-        this.host = host;
-    }
-
     public Date getCreated_at() {
         return created_at;
     }
 
     public void setCreated_at(Date created_at) {
         this.created_at = created_at;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

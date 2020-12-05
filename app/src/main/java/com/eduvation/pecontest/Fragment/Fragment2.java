@@ -1,11 +1,13 @@
 package com.eduvation.pecontest.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
@@ -15,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.eduvation.pecontest.Activity.AddMeetingActivity;
 import com.eduvation.pecontest.Adapter.Communicate_Adapter;
 import com.eduvation.pecontest.Class.Communication;
 import com.eduvation.pecontest.Network.RetrofitAPI;
@@ -31,8 +34,9 @@ public class Fragment2 extends Fragment {
     SearchView search;
     Spinner loc_spinner, pe_spinner;
     RecyclerView commute_recycle;
+    ImageView add_btn;
     Context context;
-    Communicate_Adapter adapter;
+    public Communicate_Adapter adapter;
     ArrayList<Integer> back_img=null;
     ArrayList<Communication> total=null;
     ArrayList<Communication> choose=null;
@@ -49,10 +53,12 @@ public class Fragment2 extends Fragment {
         loc_spinner=v.findViewById(R.id.location_spinner);
         pe_spinner=v.findViewById(R.id.pe_spinner);
         commute_recycle=v.findViewById(R.id.commute_recycler);
+        add_btn=v.findViewById(R.id.add_meeting_btn);
         context=getContext();
 
         setting_data();
         setting_spinner();
+        setting_click();
 
         return v;
     }
@@ -72,7 +78,7 @@ public class Fragment2 extends Fragment {
             public void onResponse(Call<ArrayList<Communication>> call, Response<ArrayList<Communication>> response) {
                 if(response.isSuccessful()){
                     for(Communication item:response.body()){
-                        total.add(new Communication(item.getHost_email(), item.getHost(), item.getLocation(), item.getTitle(), item.getFind_people(), item.getBody(), item.getCreated_at()));
+                        total.add(new Communication(item.getHost(), item.getLocation(), item.getTitle(), item.getFind_people(), item.getBody(), item.getCreated_at(), item.getCategory(), item.getAddress()));
                     }
                     setting_recyclerview();
                 }
@@ -151,5 +157,14 @@ public class Fragment2 extends Fragment {
 //            }
 //        }
 //        adapter.removeall(choose);
+    }
+
+    public void setting_click(){
+        add_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(context, AddMeetingActivity.class));
+            }
+        });
     }
 }

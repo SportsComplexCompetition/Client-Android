@@ -12,11 +12,21 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
+import com.eduvation.pecontest.Class.Comment;
 import com.eduvation.pecontest.Fragment.Fragment1;
 import com.eduvation.pecontest.Fragment.Fragment2;
 import com.eduvation.pecontest.Fragment.Fragment3;
 import com.eduvation.pecontest.Fragment.Fragment4;
+import com.eduvation.pecontest.Network.RetrofitAPI;
+import com.eduvation.pecontest.Network.RetrofitClient;
 import com.eduvation.pecontest.R;
+import com.eduvation.pecontest.Singleton.ManageComment;
+
+import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
     FrameLayout container;
@@ -28,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
     Fragment4 fragment4=null;
     FragmentManager fragmentManager;
     public static Context main_context;
+
+    RetrofitAPI myAPI;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
 
         setting_view();
         setting_clicklistener();
+
+        getting_comment();
     }
 
     public void setting_view(){
@@ -59,10 +73,13 @@ public class MainActivity extends AppCompatActivity {
         frag4.setOnClickListener(setting_fragment);
 
         fragment1=new Fragment1();
+        fragment2=new Fragment2();
 
         fragmentManager=getSupportFragmentManager();
         FragmentTransaction transaction=fragmentManager.beginTransaction();
         transaction.add(R.id.container, fragment1);
+        transaction.add(R.id.container, fragment2);
+        transaction.hide(fragment2);
         transaction.commit();
 
         Glide.with(main_context).load(R.drawable.home).into(tab1);
@@ -174,4 +191,28 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
+
+    public void getting_comment(){
+        myAPI= RetrofitClient.getApiService();
+        ArrayList<Comment> comment_total=new ArrayList<>();
+        Call<ArrayList<Comment>> getcomment=myAPI.get_comment();
+        getcomment.enqueue(new Callback<ArrayList<Comment>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Comment>> call, Response<ArrayList<Comment>> response) {
+                if(response.isSuccessful()){
+                    for(Comment item:response.body()){
+                        comment_total.add(item);
+                    }
+                }
+                ManageComment.getInstance().setComment_total(comment_total);
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Comment>> call, Throwable t) {
+
+            }
+        });
+
+
+    }
 }

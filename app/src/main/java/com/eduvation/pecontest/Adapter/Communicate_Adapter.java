@@ -1,6 +1,7 @@
 package com.eduvation.pecontest.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,12 +9,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.eduvation.pecontest.Activity.EachMeetingActivity;
 import com.eduvation.pecontest.Class.Communication;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+
 import com.eduvation.pecontest.R;
 
 public class Communicate_Adapter extends RecyclerView.Adapter {
@@ -28,12 +34,14 @@ public class Communicate_Adapter extends RecyclerView.Adapter {
     public static class CommunicationViewHolder extends RecyclerView.ViewHolder{
         ImageView img;
         TextView title, location, people;
+        CardView card;
         public CommunicationViewHolder(@NonNull View itemView) {
             super(itemView);
             img=itemView.findViewById(R.id.commute_background);
             title=itemView.findViewById(R.id.commute_title);
             location=itemView.findViewById(R.id.commute_location);
             people=itemView.findViewById(R.id.commute_people);
+            card=itemView.findViewById(R.id.card);
         }
     }
     @NonNull
@@ -48,7 +56,8 @@ public class Communicate_Adapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         CommunicationViewHolder vh=(CommunicationViewHolder)holder;
-        Glide.with(context).load(img.get(position)).into(vh.img);
+        //Glide.with(context).load(img.get(position)).into(vh.img);
+        Glide.with(context).load(R.drawable.photo1).into(vh.img);
         vh.title.setText(data.get(position).getTitle());
         String loc="";
         int l=data.get(position).getLocation();
@@ -73,11 +82,38 @@ public class Communicate_Adapter extends RecyclerView.Adapter {
         }
         vh.location.setText(loc);
         vh.people.setText(data.get(position).getFind_people()+"명 참여중");
+
+        final int pos=position;
+        final String ll=loc;
+        vh.card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(context, EachMeetingActivity.class);
+                intent.putExtra("title", data.get(pos).getTitle());
+                intent.putExtra("location", ll);
+                intent.putExtra("body", data.get(pos).getBody());
+                intent.putExtra("address", data.get(pos).getAddress());
+                Date date=data.get(pos).getCreated_at();
+                SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
+                String d=format.format(date);
+                intent.putExtra("date", d);
+                intent.putExtra("pk", pos+1);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return data==null?0:data.size();
+    }
+
+    public void addnewItem(Communication c){
+        if(data==null){
+            data=new ArrayList<>();
+        }
+        data.add(c);
+        notifyDataSetChanged();
     }
 
     public void removeall(ArrayList<Communication> newData){

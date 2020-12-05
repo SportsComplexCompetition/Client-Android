@@ -1,5 +1,6 @@
 package com.eduvation.pecontest.Network;
 
+import com.eduvation.pecontest.Class.Comment;
 import com.eduvation.pecontest.Class.Communication;
 import com.google.gson.JsonArray;
 
@@ -20,4 +21,10 @@ public interface RetrofitAPI {
 
     @POST("meetinglist/")
     Call<Void> make_communication(@Body Communication meeting);
+
+    @GET("commentlist/")
+    Call<ArrayList<Comment>> get_comment();
+
+    @POST("commentlist/")
+    Call<Void> send_comment(@Body Comment comment);
 }
