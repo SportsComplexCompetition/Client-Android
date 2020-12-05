@@ -4,21 +4,21 @@ import java.util.Date;
 
 public class Communication {
     String host_email;
-    String host_key;
-    String location;
+    String host;
+    int location;
     String title;
-    int people;
+    int find_people;
     String body;
-    Date date;
+    Date created_at;
     public Communication(){}
-    public Communication(String host_email, String host_key, String location, String title, int people, String body, Date date){
+    public Communication(String host_email, String host, int location, String title, int find_people, String body, Date created_at){
         this.host_email=host_email;
-        this.host_key=host_key;
+        this.host=host;
         this.location=location;
         this.title=title;
-        this.people=people;
+        this.find_people=find_people;
         this.body=body;
-        this.date=date;
+        this.created_at=created_at;
     }
 
     public String getHost_email() {
@@ -29,19 +29,13 @@ public class Communication {
         this.host_email = host_email;
     }
 
-    public String getHost_key() {
-        return host_key;
-    }
 
-    public void setHost_key(String host_key) {
-        this.host_key = host_key;
-    }
 
-    public String getLocation() {
+    public int getLocation() {
         return location;
     }
 
-    public void setLocation(String location) {
+    public void setLocation(int location) {
         this.location = location;
     }
 
@@ -53,12 +47,12 @@ public class Communication {
         this.title = title;
     }
 
-    public int getPeople() {
-        return people;
+    public int getFind_people() {
+        return find_people;
     }
 
-    public void setPeople(int people) {
-        this.people = people;
+    public void setFind_people(int find_people) {
+        this.find_people = find_people;
     }
 
     public String getBody() {
@@ -69,11 +63,19 @@ public class Communication {
         this.body = body;
     }
 
-    public Date getDate() {
-        return date;
+    public String getHost() {
+        return host;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setHost(String host) {
+        this.host = host;
+    }
+
+    public Date getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(Date created_at) {
+        this.created_at = created_at;
     }
 }

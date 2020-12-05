@@ -10,16 +10,48 @@
         android:layout_marginBottom="15dp"
         android:clickable="true"
         app:cardElevation="5dp"
-        app:cardUseCompatPadding="true">
-        <LinearLayout
+        app:cardCornerRadius="15dp">
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="105dp"
             android:orientation="vertical"
             android:weightSum="10">
-            <TextView
-                android:id="@+id/test"
+            <ImageView
+                android:id="@+id/commute_background"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-        </LinearLayout>
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:weightSum="3"
+                android:padding="10dp">
+                <TextView
+                    android:id="@+id/commute_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:gravity="bottom"/>
+                <TextView
+                    android:id="@+id/commute_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:textSize="18sp"
+                    android:textColor="#FFFFFF"/>
+                <TextView
+                    android:id="@+id/commute_people"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:textSize="18sp"
+                    android:textColor="#FFFFFF"
+                    android:gravity="top"/>
+            </LinearLayout>
+        </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </RelativeLayout>

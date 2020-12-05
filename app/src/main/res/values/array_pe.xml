@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="pe">
-        <item>종목선택</item>
+        <item>종목</item>
         <item>푸쉬업</item>
     </string-array>
 </resources>

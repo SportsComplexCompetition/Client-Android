@@ -33,6 +33,7 @@ public class Fragment2 extends Fragment {
     RecyclerView commute_recycle;
     Context context;
     Communicate_Adapter adapter;
+    ArrayList<Integer> back_img=null;
     ArrayList<Communication> total=null;
     ArrayList<Communication> choose=null;
     String loc, pe;
@@ -44,6 +45,7 @@ public class Fragment2 extends Fragment {
         View v=inflater.inflate(R.layout.fragment2, container, false);
 
         search=v.findViewById(R.id.search);
+        search.onActionViewExpanded();
         loc_spinner=v.findViewById(R.id.location_spinner);
         pe_spinner=v.findViewById(R.id.pe_spinner);
         commute_recycle=v.findViewById(R.id.commute_recycler);
@@ -56,6 +58,12 @@ public class Fragment2 extends Fragment {
     }
 
     public void setting_data(){
+        back_img=new ArrayList<>();
+        back_img.add(R.drawable.photo1);
+        back_img.add(R.drawable.photo2);
+        back_img.add(R.drawable.photo3);
+        back_img.add(R.drawable.photo4);
+
         total=new ArrayList<>();
         myAPI= RetrofitClient.getApiService();
         Call<ArrayList<Communication>> getcommute=myAPI.get_communication();
@@ -64,7 +72,7 @@ public class Fragment2 extends Fragment {
             public void onResponse(Call<ArrayList<Communication>> call, Response<ArrayList<Communication>> response) {
                 if(response.isSuccessful()){
                     for(Communication item:response.body()){
-                        total.add(new Communication(item.getHost_email(), item.getHost_key(), item.getLocation(), item.getTitle(), item.getPeople(), item.getBody(), item.getDate()));
+                        total.add(new Communication(item.getHost_email(), item.getHost(), item.getLocation(), item.getTitle(), item.getFind_people(), item.getBody(), item.getCreated_at()));
                     }
                     setting_recyclerview();
                 }
@@ -79,7 +87,7 @@ public class Fragment2 extends Fragment {
     }
     public void setting_recyclerview(){
         commute_recycle.setLayoutManager(new LinearLayoutManager(context));
-        adapter=new Communicate_Adapter(total, context);
+        adapter=new Communicate_Adapter(total, back_img, context);
         commute_recycle.setAdapter(adapter);
     }
 

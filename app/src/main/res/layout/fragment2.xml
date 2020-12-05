@@ -9,15 +9,17 @@
         android:id="@+id/search"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.7"
+        android:layout_weight="1.2"
         android:layout_margin="15dp"
-        app:queryHint="체력검정/운동 검색"/>
+        app:queryHint="소모임 찾기"
+        android:paddingLeft="10dp"
+        android:background="@drawable/round_layout"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.7"
         android:orientation="horizontal"
-        android:weightSum="2">
+        android:weightSum="4">
         <Spinner
             android:id="@+id/location_spinner"
             android:layout_width="0dp"
@@ -25,20 +27,36 @@
             android:layout_weight="1"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="5dp"
-            android:entries="@array/location"/>
+            android:entries="@array/location"
+            android:background="@drawable/spinner_layout"/>
         <Spinner
             android:id="@+id/pe_spinner"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginRight="15dp"
+            android:layout_marginRight="5dp"
             android:layout_marginLeft="5dp"
-            android:entries="@array/pe"/>
+            android:entries="@array/pe"
+            android:background="@drawable/spinner_layout"/>
     </LinearLayout>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/commute_recycler"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_margin="15dp"
-        android:layout_weight="8.6"/>
+        android:layout_weight="8.1"
+        android:layout_margin="15dp">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/commute_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        <ImageView
+            android:id="@+id/add_meeting_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/add_meeting"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="15dp"/>
+    </RelativeLayout>
+
 </LinearLayout>

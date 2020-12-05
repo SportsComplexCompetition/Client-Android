@@ -17,7 +17,7 @@
                 android:id="@+id/location_rank"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:background="#A9D0F5"
+                android:background="#355F9C"
                 android:textColor="#FFFFFF"
                 android:gravity="center"
                 android:textStyle="bold"
