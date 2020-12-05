@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,10 +24,10 @@ public class Communicate_Adapter extends RecyclerView.Adapter {
         this.context=context;
     }
     public static class CommunicationViewHolder extends RecyclerView.ViewHolder{
-        ImageView img;
+        TextView test;
         public CommunicationViewHolder(@NonNull View itemView) {
             super(itemView);
-            img=itemView.findViewById(R.id.commute_img);
+            test=itemView.findViewById(R.id.test);
         }
     }
     @NonNull
@@ -41,7 +42,7 @@ public class Communicate_Adapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         CommunicationViewHolder vh=(CommunicationViewHolder)holder;
-        Glide.with(context).load(data.get(position).getImg()).into(vh.img);
+        vh.test.setText(data.get(position).getBody()+data.get(position).getDate()+data.get(position).getHost_email());
     }
 
     @Override

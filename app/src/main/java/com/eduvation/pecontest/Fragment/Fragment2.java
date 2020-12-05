@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,9 +17,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.eduvation.pecontest.Adapter.Communicate_Adapter;
 import com.eduvation.pecontest.Class.Communication;
+import com.eduvation.pecontest.Network.RetrofitAPI;
+import com.eduvation.pecontest.Network.RetrofitClient;
 import com.eduvation.pecontest.R;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Fragment2 extends Fragment {
     SearchView search;
@@ -28,9 +33,11 @@ public class Fragment2 extends Fragment {
     RecyclerView commute_recycle;
     Context context;
     Communicate_Adapter adapter;
-    ArrayList<Communication> total;
+    ArrayList<Communication> total=null;
     ArrayList<Communication> choose=null;
     String loc, pe;
+
+    RetrofitAPI myAPI;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -43,7 +50,6 @@ public class Fragment2 extends Fragment {
         context=getContext();
 
         setting_data();
-        setting_recyclerview();
         setting_spinner();
 
         return v;
@@ -51,8 +57,24 @@ public class Fragment2 extends Fragment {
 
     public void setting_data(){
         total=new ArrayList<>();
-        Communication commute=new Communication("예시제목", "에시글", R.drawable.main_challenge1);
-        total.add(commute);
+        myAPI= RetrofitClient.getApiService();
+        Call<ArrayList<Communication>> getcommute=myAPI.get_communication();
+        getcommute.enqueue(new Callback<ArrayList<Communication>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Communication>> call, Response<ArrayList<Communication>> response) {
+                if(response.isSuccessful()){
+                    for(Communication item:response.body()){
+                        total.add(new Communication(item.getHost_email(), item.getHost_key(), item.getLocation(), item.getTitle(), item.getPeople(), item.getBody(), item.getDate()));
+                    }
+                    setting_recyclerview();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Communication>> call, Throwable t) {
+                System.out.println("communication fail");
+            }
+        });
         choose=new ArrayList<>();
     }
     public void setting_recyclerview(){
@@ -96,30 +118,30 @@ public class Fragment2 extends Fragment {
         });
     }
     public void find_want_communication(){
-        if(loc.equals("지역선택")&&pe.equals("종목선택")){
-            choose=total;
-        }
-        else if(loc.equals("지역선택")&&(!pe.equals("종목선택"))){
-            for(int i=0; i<total.size(); i++){
-                if(pe.equals(total.get(i).getName())){
-                    choose.add(total.get(i));
-                }
-            }
-        }
-        else if((!loc.equals("지역선택"))&&pe.equals("종목선택")){
-            for(int i=0; i<total.size(); i++){
-                if(loc.equals(total.get(i).getLocation())){
-                    choose.add(total.get(i));
-                }
-            }
-        }
-        else{
-            for(int i=0; i<total.size(); i++){
-                if(loc.equals(total.get(i).getLocation())&&pe.equals(total.get(i).getName())){
-                    choose.add(total.get(i));
-                }
-            }
-        }
-        adapter.removeall(choose);
+//        if(loc.equals("지역선택")&&pe.equals("종목선택")){
+//            choose=total;
+//        }
+//        else if(loc.equals("지역선택")&&(!pe.equals("종목선택"))){
+//            for(int i=0; i<total.size(); i++){
+//                if(pe.equals(total.get(i).getCategory())){
+//                    choose.add(total.get(i));
+//                }
+//            }
+//        }
+//        else if((!loc.equals("지역선택"))&&pe.equals("종목선택")){
+//            for(int i=0; i<total.size(); i++){
+//                if(loc.equals(total.get(i).getLocation())){
+//                    choose.add(total.get(i));
+//                }
+//            }
+//        }
+//        else{
+//            for(int i=0; i<total.size(); i++){
+//                if(loc.equals(total.get(i).getLocation())&&pe.equals(total.get(i).getCategory())){
+//                    choose.add(total.get(i));
+//                }
+//            }
+//        }
+//        adapter.removeall(choose);
     }
 }

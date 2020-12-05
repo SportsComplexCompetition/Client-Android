@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.eduvation.pecontest.Adapter.Main_Challenge_Adapter;
+import com.eduvation.pecontest.Adapter.Main_Rank_Adapter;
 import com.eduvation.pecontest.Class.Area_Rank_Data;
 import com.eduvation.pecontest.Class.Main_Challenge;
 import com.eduvation.pecontest.Network.RetrofitAPI;
@@ -33,6 +34,8 @@ public class Fragment1 extends Fragment {
     ArrayList<Main_Challenge> data=null;
     Main_Challenge_Adapter adapter=null;
     Context context;
+    RecyclerView rank;
+    Main_Rank_Adapter rankadapter=null;
 
     RetrofitAPI myAPI;
     ArrayList<Area_Rank_Data> rank_data=null;
@@ -42,6 +45,7 @@ public class Fragment1 extends Fragment {
         View v=inflater.inflate(R.layout.fragment1, container, false);
 
         challenge=v.findViewById(R.id.main_challenge_recycle);
+        rank=v.findViewById(R.id.main_rank_recycle);
         context=getContext();
 
 
@@ -67,6 +71,8 @@ public class Fragment1 extends Fragment {
         challenge.setLayoutManager(new LinearLayoutManager(context));
         adapter=new Main_Challenge_Adapter(data, context);
         challenge.setAdapter(adapter);
+
+        rank.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
     }
 
     public void getting_data_from_server(){
@@ -90,9 +96,8 @@ public class Fragment1 extends Fragment {
                         String bronze=medalarray.get(2).toString();
                         rank_data.add(new Area_Rank_Data(location, gold, silver, bronze, "0"));
                     }
-//                    for(int i=0; i<rank_data.size(); i++){
-//                        System.out.println(rank_data.get(i).getLocation()+" "+rank_data.get(i).getGold()+" "+rank_data.get(i).getSilver()+" "+rank_data.get(i).getBronze()+" "+rank_data.get(i).getMatch());
-//                    }
+                    rankadapter=new Main_Rank_Adapter(rank_data, context);
+                    rank.setAdapter(rankadapter);
                 }
             }
             @Override

@@ -19,8 +19,9 @@
                 android:layout_weight="0.7"
                 android:src="@drawable/rank_title"/>
         </LinearLayout>
-        <TextView
-            android:id="@+id/fortest"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/main_rank_recycle"
+            android:layout_margin="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <LinearLayout
