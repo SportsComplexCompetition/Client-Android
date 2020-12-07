@@ -3,6 +3,8 @@ package com.eduvation.pecontest.Class;
 import java.util.Date;
 
 public class Communication {
+    int pk;
+    String host_nickname;
     int host;
     int location;
     String title;
@@ -14,7 +16,9 @@ public class Communication {
 
     public Communication(){}
 
-    public Communication(int host, int location, String title, int find_people, String body, Date created_at, String category, String address){
+    public Communication(int pk, String host_nickname, int host, int location, String title, int find_people, String body, Date created_at, String category, String address){
+        this.pk=pk;
+        this.host_nickname=host_nickname;
         this.host=host;
         this.location=location;
         this.title=title;
@@ -23,6 +27,22 @@ public class Communication {
         this.created_at=created_at;
         this.category=category;
         this.address=address;
+    }
+
+    public int getPk() {
+        return pk;
+    }
+
+    public void setPk(int pk) {
+        this.pk = pk;
+    }
+
+    public String getHost_nickname() {
+        return host_nickname;
+    }
+
+    public void setHost_nickname(String host_nickname) {
+        this.host_nickname = host_nickname;
     }
 
     public int getHost() {

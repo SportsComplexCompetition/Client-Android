@@ -89,12 +89,16 @@ public class Communicate_Adapter extends RecyclerView.Adapter {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(context, EachMeetingActivity.class);
+                intent.putExtra("nickname", data.get(pos).getHost_nickname());
                 intent.putExtra("title", data.get(pos).getTitle());
                 intent.putExtra("location", ll);
                 intent.putExtra("body", data.get(pos).getBody());
                 intent.putExtra("address", data.get(pos).getAddress());
+                intent.putExtra("people", data.get(pos).getFind_people());
+                intent.putExtra("img", R.drawable.photo1);
+                intent.putExtra("category", data.get(pos).getCategory());
                 Date date=data.get(pos).getCreated_at();
-                SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat format=new SimpleDateFormat("yyyy.MM.dd");
                 String d=format.format(date);
                 intent.putExtra("date", d);
                 intent.putExtra("pk", pos+1);

@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.eduvation.pecontest.Class.Comment;
+import com.eduvation.pecontest.Class.Competition;
 import com.eduvation.pecontest.Fragment.Fragment1;
 import com.eduvation.pecontest.Fragment.Fragment2;
 import com.eduvation.pecontest.Fragment.Fragment3;
@@ -21,6 +22,7 @@ import com.eduvation.pecontest.Network.RetrofitAPI;
 import com.eduvation.pecontest.Network.RetrofitClient;
 import com.eduvation.pecontest.R;
 import com.eduvation.pecontest.Singleton.ManageComment;
+import com.eduvation.pecontest.Singleton.ManageCompetition;
 
 import java.util.ArrayList;
 
@@ -49,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         setting_clicklistener();
 
         getting_comment();
+        getting_match();
     }
 
     public void setting_view(){
@@ -209,10 +212,38 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ArrayList<Comment>> call, Throwable t) {
-
+                System.out.println("comment fail");
             }
         });
 
 
+    }
+    public void getting_match(){
+        ArrayList<Competition> events=new ArrayList<>();
+        ArrayList<Competition> matches=new ArrayList<>();
+        Call<ArrayList<Competition>> comp_total=myAPI.get_competition();
+        comp_total.enqueue(new Callback<ArrayList<Competition>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Competition>> call, Response<ArrayList<Competition>> response) {
+                if(response.isSuccessful()){
+                    for(Competition item:response.body()){
+                        if(item.getComp_type()==1){
+                            events.add(item);
+                        }
+                        else{
+                            matches.add(item);
+                        }
+                    }
+                    ManageCompetition.getInstance().setEvent_total(events);
+                    ManageCompetition.getInstance().setMatch_total(matches);
+                    System.out.println("match success");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Competition>> call, Throwable t) {
+                System.out.println("match fail");
+            }
+        });
     }
 }

@@ -2,6 +2,8 @@ package com.eduvation.pecontest.Network;
 
 import com.eduvation.pecontest.Class.Comment;
 import com.eduvation.pecontest.Class.Communication;
+import com.eduvation.pecontest.Class.Competition;
+import com.eduvation.pecontest.Class.NewAttend;
 import com.google.gson.JsonArray;
 
 import java.util.ArrayList;
@@ -10,6 +12,8 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
 
 public interface RetrofitAPI {
 
@@ -27,4 +31,13 @@ public interface RetrofitAPI {
 
     @POST("commentlist/")
     Call<Void> send_comment(@Body Comment comment);
+
+    @GET("complist")
+    Call<ArrayList<Competition>> get_competition();
+
+    @POST("complist")
+    Call<Void> make_competition(@Body Competition competition);
+
+    @PUT("competitions/join/{pk}")
+    Call<Void> join_competition(@Path("pk") int pk, @Body NewAttend newAttend);
 }

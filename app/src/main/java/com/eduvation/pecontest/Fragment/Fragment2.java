@@ -78,7 +78,7 @@ public class Fragment2 extends Fragment {
             public void onResponse(Call<ArrayList<Communication>> call, Response<ArrayList<Communication>> response) {
                 if(response.isSuccessful()){
                     for(Communication item:response.body()){
-                        total.add(new Communication(item.getHost(), item.getLocation(), item.getTitle(), item.getFind_people(), item.getBody(), item.getCreated_at(), item.getCategory(), item.getAddress()));
+                        total.add(new Communication(item.getPk(), item.getHost_nickname(), item.getHost(), item.getLocation(), item.getTitle(), item.getFind_people(), item.getBody(), item.getCreated_at(), item.getCategory(), item.getAddress()));
                     }
                     setting_recyclerview();
                 }
