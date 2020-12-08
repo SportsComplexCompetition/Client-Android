@@ -7,7 +7,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
-    private static final String BASE_URL=" https://3574e6fdc94f.ngrok.io";
+    private static final String BASE_URL="https://Chanjongp.pythonanywhere.com";
 
     public static RetrofitAPI getApiService(){
         return getInstance().create(RetrofitAPI.class);

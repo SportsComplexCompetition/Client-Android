@@ -1,16 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:layout_width="match_parent"
+<LinearLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="10"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <LinearLayout
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <Button
-            android:id="@+id/make_btn"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="8.2"
+        android:background="#0C2A55">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="모임 개설"/>
-
-    </LinearLayout>
-</ScrollView>
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="지역매칭 개설하기"
+                android:textStyle="bold"
+                android:textSize="27sp"
+                android:textColor="#FFFFFF"
+                android:gravity="center"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="35dp"/>
+            <EditText
+                android:id="@+id/match_title"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/round_layout"
+                android:layout_margin="15dp"
+                android:hint="경쟁 이름"
+                android:textColorHint="#000000"
+                android:textColor="#000000"
+                android:paddingLeft="10dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+                <Spinner
+                    android:id="@+id/match_loc"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="15dp"
+                    android:entries="@array/location"
+                    android:background="@drawable/color_spinner_layout"/>
+                <Spinner
+                    android:id="@+id/match_pe"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="5dp"
+                    android:entries="@array/pe"
+                    android:background="@drawable/color_spinner_layout"/>
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/round_layout"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="15dp"
+                android:textColor="#000000"
+                android:text="오늘 날짜로 자동 생성"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:textSize="17sp"/>
+            <EditText
+                android:id="@+id/match_end"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/round_layout"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="15dp"
+                android:hint="마감 날짜(2021-01-01 형식)"
+                android:textColorHint="#000000"
+                android:textColor="#000000"
+                android:paddingLeft="10dp"/>
+            <EditText
+                android:id="@+id/match_people"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/round_layout"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="15dp"
+                android:hint="최대 인원"
+                android:textColorHint="#000000"
+                android:textColor="#000000"
+                android:paddingLeft="10dp"/>
+            <EditText
+                android:id="@+id/match_money"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/round_layout"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="35dp"
+                android:hint="참가비"
+                android:textColorHint="#000000"
+                android:textColor="#000000"
+                android:paddingLeft="10dp"/>
+        </LinearLayout>
+    </ScrollView>
+    <TextView
+        android:id="@+id/match_make"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.8"
+        android:text="개설하기"
+        android:textColor="#0C2A55"
+        android:gravity="center"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:clickable="true"/>
+</LinearLayout>

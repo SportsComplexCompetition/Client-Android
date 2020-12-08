@@ -1,6 +1,7 @@
 package com.eduvation.pecontest.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.eduvation.pecontest.Activity.AddMatchActivity;
 import com.eduvation.pecontest.Adapter.EventAdapter;
 import com.eduvation.pecontest.Adapter.MatchAdapter;
 import com.eduvation.pecontest.Class.Competition;
@@ -46,6 +48,8 @@ public class Fragment3 extends Fragment {
         context=getContext();
 
         setting_recyclerview();
+
+        setting_make_new_competition();
 
         return v;
     }
@@ -86,5 +90,14 @@ public class Fragment3 extends Fragment {
         if(matchAdapter.getItemCount()>=1){
             no_match_img.setVisibility(View.GONE);
         }
+    }
+
+    public void setting_make_new_competition(){
+        add_match.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(context, AddMatchActivity.class));
+            }
+        });
     }
 }

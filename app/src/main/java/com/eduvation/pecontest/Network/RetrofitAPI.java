@@ -4,6 +4,7 @@ import com.eduvation.pecontest.Class.Comment;
 import com.eduvation.pecontest.Class.Communication;
 import com.eduvation.pecontest.Class.Competition;
 import com.eduvation.pecontest.Class.NewAttend;
+import com.eduvation.pecontest.Class.User;
 import com.google.gson.JsonArray;
 
 import java.util.ArrayList;
@@ -32,12 +33,15 @@ public interface RetrofitAPI {
     @POST("commentlist/")
     Call<Void> send_comment(@Body Comment comment);
 
-    @GET("complist")
+    @GET("complist/")
     Call<ArrayList<Competition>> get_competition();
 
-    @POST("complist")
+    @POST("complist/")
     Call<Void> make_competition(@Body Competition competition);
 
     @PUT("competitions/join/{pk}")
     Call<Void> join_competition(@Path("pk") int pk, @Body NewAttend newAttend);
+
+    @GET("userlist/")
+    Call<ArrayList<User>> get_user();
 }

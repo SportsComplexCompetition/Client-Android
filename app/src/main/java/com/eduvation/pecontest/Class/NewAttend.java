@@ -2,22 +2,22 @@ package com.eduvation.pecontest.Class;
 
 public class NewAttend {
     int user_pk;
-    int money;
+    int total_money;
 
     public NewAttend(){
     }
 
-    public NewAttend(int user_pk, int money){
+    public NewAttend(int user_pk, int total_money){
         this.user_pk=user_pk;
-        this.money=money;
+        this.total_money=total_money;
     }
 
-    public int getMoney() {
-        return money;
+    public int getTotal_money() {
+        return total_money;
     }
 
-    public void setMoney(int money) {
-        this.money = money;
+    public void setTotal_money(int total_money) {
+        this.total_money = total_money;
     }
 
     public int getUser_pk() {

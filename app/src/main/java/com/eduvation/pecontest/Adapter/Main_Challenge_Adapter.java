@@ -12,15 +12,17 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.eduvation.pecontest.Class.Competition;
 import com.eduvation.pecontest.Class.Main_Challenge;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import com.eduvation.pecontest.R;
 
 public class Main_Challenge_Adapter extends RecyclerView.Adapter {
-    ArrayList<Main_Challenge> data=null;
+    ArrayList<Competition> data=null;
     Context context;
-    public Main_Challenge_Adapter(ArrayList<Main_Challenge> data, Context context){
+    public Main_Challenge_Adapter(ArrayList<Competition> data, Context context){
         this.data=data;
         this.context=context;
     }
@@ -49,10 +51,14 @@ public class Main_Challenge_Adapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         MainChallengeViewHolder vh=(MainChallengeViewHolder)holder;
-        vh.cat.setText(data.get(position).getCat());
-        vh.people.setText(data.get(position).getPeople()+"명이 함께하는 중");
-        Glide.with(context).load(data.get(position).getImg()).into(vh.img);
-        vh.period.setText(data.get(position).getPeriod());
+        vh.cat.setText(data.get(position).getCategory());
+        vh.people.setText(data.get(position).getJoined_people().size()+"명이 함께하는 중");
+        Glide.with(context).load(R.drawable.photo1).into(vh.img);
+        SimpleDateFormat from=new SimpleDateFormat("MM.dd");
+        String f=from.format(data.get(position).getCreated_at());
+        String t=data.get(position).getEnded_at().replaceAll("-", ".");
+        t=t.substring(5);
+        vh.period.setText(f+"~"+t);
     }
 
     @Override

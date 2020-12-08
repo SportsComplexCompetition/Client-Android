@@ -77,12 +77,18 @@ public class MainActivity extends AppCompatActivity {
 
         fragment1=new Fragment1();
         fragment2=new Fragment2();
+        fragment3=new Fragment3();
+        fragment4=new Fragment4();
 
         fragmentManager=getSupportFragmentManager();
         FragmentTransaction transaction=fragmentManager.beginTransaction();
         transaction.add(R.id.container, fragment1);
         transaction.add(R.id.container, fragment2);
+        transaction.add(R.id.container, fragment3);
+        transaction.add(R.id.container, fragment4);
         transaction.hide(fragment2);
+        transaction.hide(fragment3);
+        transaction.hide(fragment4);
         transaction.commit();
 
         Glide.with(main_context).load(R.drawable.home).into(tab1);
@@ -196,54 +202,56 @@ public class MainActivity extends AppCompatActivity {
     };
 
     public void getting_comment(){
-        myAPI= RetrofitClient.getApiService();
-        ArrayList<Comment> comment_total=new ArrayList<>();
-        Call<ArrayList<Comment>> getcomment=myAPI.get_comment();
-        getcomment.enqueue(new Callback<ArrayList<Comment>>() {
-            @Override
-            public void onResponse(Call<ArrayList<Comment>> call, Response<ArrayList<Comment>> response) {
-                if(response.isSuccessful()){
-                    for(Comment item:response.body()){
-                        comment_total.add(item);
-                    }
-                }
-                ManageComment.getInstance().setComment_total(comment_total);
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<Comment>> call, Throwable t) {
-                System.out.println("comment fail");
-            }
-        });
+//        myAPI= RetrofitClient.getApiService();
+//        ArrayList<Comment> comment_total=new ArrayList<>();
+//        Call<ArrayList<Comment>> getcomment=myAPI.get_comment();
+//        getcomment.enqueue(new Callback<ArrayList<Comment>>() {
+//            @Override
+//            public void onResponse(Call<ArrayList<Comment>> call, Response<ArrayList<Comment>> response) {
+//                if(response.isSuccessful()){
+//                    for(Comment item:response.body()){
+//                        comment_total.add(item);
+//                    }
+//                }
+//                ManageComment.getInstance().setComment_total(comment_total);
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ArrayList<Comment>> call, Throwable t) {
+//                System.out.println("comment fail");
+//            }
+//        });
 
 
     }
     public void getting_match(){
-        ArrayList<Competition> events=new ArrayList<>();
-        ArrayList<Competition> matches=new ArrayList<>();
-        Call<ArrayList<Competition>> comp_total=myAPI.get_competition();
-        comp_total.enqueue(new Callback<ArrayList<Competition>>() {
-            @Override
-            public void onResponse(Call<ArrayList<Competition>> call, Response<ArrayList<Competition>> response) {
-                if(response.isSuccessful()){
-                    for(Competition item:response.body()){
-                        if(item.getComp_type()==1){
-                            events.add(item);
-                        }
-                        else{
-                            matches.add(item);
-                        }
-                    }
-                    ManageCompetition.getInstance().setEvent_total(events);
-                    ManageCompetition.getInstance().setMatch_total(matches);
-                    System.out.println("match success");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<Competition>> call, Throwable t) {
-                System.out.println("match fail");
-            }
-        });
+//        ArrayList<Competition> events=new ArrayList<>();
+//        ArrayList<Competition> matches=new ArrayList<>();
+//        Call<ArrayList<Competition>> comp_total=myAPI.get_competition();
+//        comp_total.enqueue(new Callback<ArrayList<Competition>>() {
+//            @Override
+//            public void onResponse(Call<ArrayList<Competition>> call, Response<ArrayList<Competition>> response) {
+//                if(response.isSuccessful()){
+//                    for(Competition item:response.body()){
+//                        if(item.getComp_type()==1){
+//                            events.add(item);
+//                        }
+//                        else if(item.getComp_type()==0){
+//                            matches.add(item);
+//                        }
+//                    }
+//                    ManageCompetition.getInstance().setEvent_total(events);
+//                    ManageCompetition.getInstance().setMatch_total(matches);
+//                    System.out.println(events.size());
+//                    System.out.println(matches.size());
+//                    System.out.println("match success");
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ArrayList<Competition>> call, Throwable t) {
+//                System.out.println("match fail");
+//            }
+//        });
     }
 }

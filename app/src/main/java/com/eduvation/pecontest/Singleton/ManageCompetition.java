@@ -9,6 +9,8 @@ public class ManageCompetition {
     Competition competition;
     private ArrayList<Competition> event_total;
     private ArrayList<Competition> match_total;
+    Competition best;
+    ArrayList<Integer> match_count;
     public static ManageCompetition getInstance(){
         if(manageCompetition==null){
             manageCompetition=new ManageCompetition();
@@ -20,6 +22,8 @@ public class ManageCompetition {
         competition=new Competition();
         event_total=new ArrayList<>();
         match_total=new ArrayList<>();
+        match_count=new ArrayList<>();
+        best=new Competition();
     }
 
 
@@ -46,4 +50,19 @@ public class ManageCompetition {
         match_total.add(competition);
     }
 
+    public void setBest(Competition best) {
+        this.best = best;
+    }
+
+    public Competition getBest() {
+        return best;
+    }
+
+    public ArrayList<Integer> getMatch_count() {
+        return match_count;
+    }
+
+    public void setMatch_count(ArrayList<Integer> match_count) {
+        this.match_count = match_count;
+    }
 }

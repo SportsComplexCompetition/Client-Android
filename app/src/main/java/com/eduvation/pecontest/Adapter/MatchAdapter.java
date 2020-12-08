@@ -3,6 +3,7 @@ package com.eduvation.pecontest.Adapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.eduvation.pecontest.Activity.MatchCertificateActivity;
 import com.eduvation.pecontest.Class.Communication;
 import com.eduvation.pecontest.Class.Competition;
 
@@ -71,15 +73,38 @@ public class MatchAdapter extends RecyclerView.Adapter {
         MatchViewHolder vh=(MatchViewHolder)holder;
         final int pos=position;
         SimpleDateFormat from=new SimpleDateFormat("MM.dd");
-        SimpleDateFormat to=new SimpleDateFormat("MM.dd");
         String f=from.format(matches.get(position).getCreated_at());
-        String t=from.format(matches.get(position).getEnded_at());
+        String t=matches.get(position).getEnded_at().replaceAll("-", ".");
+        t=t.substring(5);
         Glide.with(context).load(img.get(position%4)).into(vh.match_img);
         vh.match_period.setText(f+"~"+t);
         vh.match_category.setText(matches.get(position).getCategory());
         vh.match_people.setText("참가자"+matches.get(position).getJoined_people().size()+"명/"+matches.get(position).getMax_people()+"명");
-        vh.match_money.setText("참가비"+matches.get(position).getMoney()+"원");
-        vh.match_money_total.setText("누적금액"+matches.get(position).getMoney()*matches.get(position).getJoined_people().size()+"원");
+        vh.match_money.setText("참가비"+matches.get(position).getRequire_money()+"원");
+        vh.match_money_total.setText("누적금액"+matches.get(position).getTotal_money()*matches.get(position).getJoined_people().size()+"원");
+        String loc="";
+        int l=matches.get(position).getLocation();
+        switch(l){
+            case 0:loc="서울";break;
+            case 1:loc="대구";break;
+            case 2:loc="대전";break;
+            case 3:loc="광주";break;
+            case 4:loc="인천";break;
+            case 5:loc="부산";break;
+            case 6:loc="울산";break;
+            case 7:loc="세종";break;
+            case 8:loc="제주";break;
+            case 9:loc="경기";break;
+            case 10:loc="강원";break;
+            case 11:loc="충남";break;
+            case 12:loc="충북";break;
+            case 13:loc="전남";break;
+            case 14:loc="전북";break;
+            case 15:loc="경남";break;
+            case 16:loc="경북";break;
+        }
+        vh.match_location.setText(loc);
+        vh.match_host.setText(matches.get(position).getHost_nickname()+"\n주최");
         for(int i=0; i<matches.get(position).getJoined_people().size(); i++){
             if(6==matches.get(position).getJoined_people().get(i)){
                 vh.match_attend_btn.setText("참여중");
@@ -101,15 +126,16 @@ public class MatchAdapter extends RecyclerView.Adapter {
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();
                                     RetrofitAPI myAPI= RetrofitClient.getApiService();
-                                    NewAttend attend=new NewAttend(6, matches.get(pos).getMoney());
+                                    NewAttend attend=new NewAttend(6, matches.get(pos).getRequire_money());
                                     Call<Void> newattend=myAPI.join_competition(matches.get(pos).getId(), attend);
+//                                    Call<Void> newattend=myAPI.join_competition(1, attend);
                                     newattend.enqueue(new Callback<Void>() {
                                         @Override
                                         public void onResponse(Call<Void> call, Response<Void> response) {
                                             vh.match_attend_btn.setText("참여중");
                                             vh.match_attend_btn.setBackground(ContextCompat.getDrawable(context, R.drawable.attend_btn));
-                                            vh.match_people.setText("참가자"+matches.get(position).getJoined_people().size()+"명/"+matches.get(position).getMax_people()+"명");
-
+                                            vh.match_people.setText("참가자"+matches.get(position).getJoined_people().size()+1+"명/"+matches.get(position).getMax_people()+"명");
+                                            vh.match_money_total.setText("누적금액"+matches.get(position).getRequire_money()*(matches.get(position).getJoined_people().size()+1)+"원");
                                         }
 
                                         @Override
@@ -128,7 +154,16 @@ public class MatchAdapter extends RecyclerView.Adapter {
                 }
             });
         }
-
+        else{
+            vh.match_attend_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent=new Intent(context, MatchCertificateActivity.class);
+                    intent.putExtra("id", matches.get(pos).getId());
+                    context.startActivity(intent);
+                }
+            });
+        }
     }
 
     @Override

@@ -70,14 +70,14 @@ public class EventAdapter extends RecyclerView.Adapter {
         final int pos=position;
         Glide.with(context).load(img.get(position%4)).into(vh.event_img);
         SimpleDateFormat from=new SimpleDateFormat("MM.dd");
-        SimpleDateFormat to=new SimpleDateFormat("MM.dd");
         String f=from.format(events.get(position).getCreated_at());
-        String t=to.format(events.get(position).getEnded_at());
+        String t=events.get(position).getEnded_at().replaceAll("-", ".");
+        t=t.substring(5);
         vh.event_period.setText(f+"~"+t);
         vh.event_category.setText(events.get(position).getCategory());
         vh.event_people.setText(events.get(position).getJoined_people().size()+"명 참여중");
-        vh.event_money.setText("참가비"+events.get(position).getMoney()+"원");
-        vh.event_total_money.setText("누적금액"+events.get(position).getMoney()*events.get(position).getJoined_people().size()+"원");
+        vh.event_money.setText("참가비"+events.get(position).getRequire_money()+"원");
+        vh.event_total_money.setText("누적금액"+events.get(position).getTotal_money()*events.get(position).getJoined_people().size()+"원");
         for(int i=0; i<events.get(position).getJoined_people().size(); i++){
             if(6==events.get(position).getJoined_people().get(i)){
                 vh.event_attend_btn.setText("참여중");
@@ -99,15 +99,16 @@ public class EventAdapter extends RecyclerView.Adapter {
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();
                                     RetrofitAPI myAPI= RetrofitClient.getApiService();
-                                    NewAttend attend=new NewAttend(6, events.get(pos).getMoney());
+                                    NewAttend attend=new NewAttend(6, events.get(pos).getRequire_money());
                                     Call<Void> newattend=myAPI.join_competition(events.get(pos).getId(), attend);
+//                                    Call<Void> newattend=myAPI.join_competition(1, attend);
                                     newattend.enqueue(new Callback<Void>() {
                                         @Override
                                         public void onResponse(Call<Void> call, Response<Void> response) {
                                             vh.event_attend_btn.setText("참여중");
                                             vh.event_attend_btn.setBackground(ContextCompat.getDrawable(context, R.drawable.attend_btn));
                                             vh.event_people.setText(events.get(pos).getJoined_people().size()+1+"명 참여중");
-
+                                            vh.event_total_money.setText("누적금액"+events.get(position).getRequire_money()*(events.get(position).getJoined_people().size()+1)+"원");
                                         }
 
                                         @Override

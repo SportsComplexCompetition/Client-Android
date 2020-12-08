@@ -1,11 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:layout_width="match_parent"
+<androidx.core.widget.NestedScrollView android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="네번째"
-        android:textSize="30sp"/>
-</LinearLayout>
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/who3"
+            android:layout_margin="10dp"/>
+        <TextView
+            android:id="@+id/my_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="사용자 별명"
+            android:textSize="15sp"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:gravity="center"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="20dp">
+            <TextView
+                android:id="@+id/my_age"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="24세"
+                android:textStyle="bold"
+                android:layout_margin="3dp"/>
+            <TextView
+                android:id="@+id/my_email"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="사용자의 이메일은 여기"
+                android:textStyle="bold"
+                android:layout_margin="3dp"/>
+            <TextView
+                android:id="@+id/my_gender"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="성별"
+                android:textStyle="bold"
+                android:layout_margin="3dp"/>
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="나의 점수"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:gravity="center"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"/>
+        <Button
+            android:id="@+id/check_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="나의 예상 수상"
+            android:background="@drawable/mypage_check_btn"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:layout_gravity="center"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="나의 경쟁"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:layout_marginTop="25dp"
+            android:gravity="center"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/my_match"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <ImageView
+                android:id="@+id/no_match_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/no_match"
+                android:visibility="gone"/>
+        </RelativeLayout>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
