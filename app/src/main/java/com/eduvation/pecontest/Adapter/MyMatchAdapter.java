@@ -68,9 +68,9 @@ public class MyMatchAdapter extends RecyclerView.Adapter {
         Glide.with(context).load(img.get(position%4)).into(vh.match_img);
         vh.match_period.setText(f+"~"+t);
         vh.match_category.setText(matches.get(position).getCategory());
-        vh.match_people.setText("참가자"+matches.get(position).getJoined_people().size()+"명/"+matches.get(position).getMax_people()+"명");
+        vh.match_people.setText("참가자"+(matches.get(position).getJoined_people().size())+"명/"+matches.get(position).getMax_people()+"명");
         vh.match_money.setText("참가비"+matches.get(position).getRequire_money()+"원");
-        vh.match_money_total.setText("누적금액"+matches.get(position).getTotal_money()*matches.get(position).getJoined_people().size()+"원");
+        vh.match_money_total.setText("누적금액"+matches.get(position).getTotal_money()+"원");
         String loc="";
         int l=matches.get(position).getLocation();
         switch(l){

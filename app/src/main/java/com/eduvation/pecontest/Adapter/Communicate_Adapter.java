@@ -57,7 +57,7 @@ public class Communicate_Adapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         CommunicationViewHolder vh=(CommunicationViewHolder)holder;
         //Glide.with(context).load(img.get(position)).into(vh.img);
-        Glide.with(context).load(R.drawable.photo1).into(vh.img);
+        Glide.with(context).load(img.get(position%4)).into(vh.img);
         vh.title.setText(data.get(position).getTitle());
         String loc="";
         int l=data.get(position).getLocation();

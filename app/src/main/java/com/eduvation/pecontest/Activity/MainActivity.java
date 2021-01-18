@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     Fragment1 fragment1=null;
     Fragment2 fragment2=null;
     Fragment3 fragment3=null;
-    Fragment4 fragment4=null;
+    public Fragment4 fragment4=null;
     FragmentManager fragmentManager;
     public static Context main_context;
 

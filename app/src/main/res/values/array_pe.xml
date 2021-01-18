@@ -2,6 +2,23 @@
 <resources>
     <string-array name="pe">
         <item>종목</item>
-        <item>푸쉬업</item>
+        <item>왕복오래달리기</item>
+        <item>왕복달리기</item>
+        <item>윗몸말아올리기</item>
+        <item>반복옆뛰기</item>
+        <item>제자리멀리뛰기</item>
+        <item>교차윗몸일으키기</item>
+        <item>의자에앉았다일어서기</item>
+        <item>걷기(야외)</item>
+        <item>제자리걷기</item>
+        <item>줄넘기</item>
+        <item>달리기</item>
+        <item>스쿼드</item>
+        <item>팔굽혀펴기</item>
+        <item>벽에서팔굽혀펴기</item>
+        <item>실내자전거타기</item>
+        <item>고정식자전거타기</item>
+        <item>플랭크</item>
+        <item>풀업</item>
     </string-array>
 </resources>

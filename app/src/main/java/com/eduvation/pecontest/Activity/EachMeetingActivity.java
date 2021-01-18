@@ -22,6 +22,7 @@ import com.eduvation.pecontest.Network.RetrofitAPI;
 import com.eduvation.pecontest.Network.RetrofitClient;
 import com.eduvation.pecontest.R;
 import com.eduvation.pecontest.Singleton.ManageComment;
+import com.eduvation.pecontest.Singleton.ManageUser;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -95,7 +96,7 @@ public class EachMeetingActivity extends AppCompatActivity {
         Glide.with(each_context).load(intent.getIntExtra("img", 0)).into(each_img);
         each_title.setText(title);
         each_loc_address.setText(location+" "+address);
-        each_people.setText(people+"명 모집중");
+        each_people.setText(people+"명 참여중");
         each_body.setText(body);
         each_date.setText("SINCE "+date);
         each_name.setText(name);
@@ -135,7 +136,7 @@ public class EachMeetingActivity extends AppCompatActivity {
         }
         final String tt=text;
         Date d=new Date();
-        Comment mycomment=new Comment("mymy", 3, pk, tt, d);
+        Comment mycomment=new Comment(ManageUser.getInstance().getMe().getNickname(), 3, pk, tt, d);
         Call<Void> newcomment=myAPI.send_comment(mycomment);
         newcomment.enqueue(new Callback<Void>() {
             @Override

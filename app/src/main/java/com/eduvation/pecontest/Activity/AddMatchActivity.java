@@ -18,6 +18,7 @@ import com.eduvation.pecontest.Class.Competition;
 import com.eduvation.pecontest.Network.RetrofitAPI;
 import com.eduvation.pecontest.Network.RetrofitClient;
 import com.eduvation.pecontest.R;
+import com.eduvation.pecontest.Singleton.ManageUser;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -124,8 +125,10 @@ public class AddMatchActivity extends AppCompatActivity {
 
         myAPI= RetrofitClient.getApiService();
         Date date=new Date();
-        Competition competition=new Competition("test", location-1, -1, 0, pe, title,
-                date, end, people, money, 0, 6, null, new ArrayList<>());
+        ArrayList<Integer> joined=new ArrayList<>();
+        joined.add(6);
+        Competition competition=new Competition(ManageUser.getInstance().getMe().getNickname(), location-1, -1, 0, pe, title,
+                date, end, people, money, money, 6, null, joined);
         Call<Void> newmatch=myAPI.make_competition(competition);
         newmatch.enqueue(new Callback<Void>() {
             @Override

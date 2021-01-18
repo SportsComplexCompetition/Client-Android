@@ -77,7 +77,7 @@ public class EventAdapter extends RecyclerView.Adapter {
         vh.event_category.setText(events.get(position).getCategory());
         vh.event_people.setText(events.get(position).getJoined_people().size()+"명 참여중");
         vh.event_money.setText("참가비"+events.get(position).getRequire_money()+"원");
-        vh.event_total_money.setText("누적금액"+events.get(position).getTotal_money()*events.get(position).getJoined_people().size()+"원");
+        vh.event_total_money.setText("누적금액"+events.get(position).getTotal_money()+"원");
         for(int i=0; i<events.get(position).getJoined_people().size(); i++){
             if(6==events.get(position).getJoined_people().get(i)){
                 vh.event_attend_btn.setText("참여중");
@@ -93,7 +93,8 @@ public class EventAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View v) {
                     AlertDialog.Builder builder=new AlertDialog.Builder(context);
-                    builder.setMessage("참가하시겠습니까?")
+                    builder.setTitle("참가 여부 동의")
+                            .setMessage("참가에 동의하시면\n후에 참가비 지불에 동의하는 것으로 \n간주합니다\n참가하시겠습니까?")
                             .setPositiveButton("예", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {

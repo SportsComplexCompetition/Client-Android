@@ -4,6 +4,8 @@ import com.eduvation.pecontest.Class.Comment;
 import com.eduvation.pecontest.Class.Communication;
 import com.eduvation.pecontest.Class.Competition;
 import com.eduvation.pecontest.Class.NewAttend;
+import com.eduvation.pecontest.Class.PE_average;
+import com.eduvation.pecontest.Class.Total_score;
 import com.eduvation.pecontest.Class.User;
 import com.google.gson.JsonArray;
 
@@ -44,4 +46,10 @@ public interface RetrofitAPI {
 
     @GET("userlist/")
     Call<ArrayList<User>> get_user();
+
+    @GET("data/average/")
+    Call<JsonArray> get_average();
+
+    @GET("data/topavglow/")
+    Call<ArrayList<Total_score>> get_topavglow();
 }

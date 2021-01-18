@@ -18,6 +18,7 @@ import com.eduvation.pecontest.Class.Communication;
 import com.eduvation.pecontest.Network.RetrofitAPI;
 import com.eduvation.pecontest.Network.RetrofitClient;
 import com.eduvation.pecontest.R;
+import com.eduvation.pecontest.Singleton.ManageUser;
 
 import java.util.Date;
 
@@ -116,7 +117,7 @@ public class AddMeetingActivity extends AppCompatActivity {
         }
         myAPI= RetrofitClient.getApiService();
         Date date=new Date();
-        Communication newcommute=new Communication(7, "woojun", 6, location-1, title, 3, body, date, pe, address);
+        Communication newcommute=new Communication(7, ManageUser.getInstance().getMe().getNickname(), 6, location-1, title, 1, body, date, pe, address);
         Call<Void> newmeeting=myAPI.make_communication(newcommute);
         newmeeting.enqueue(new Callback<Void>() {
             @Override
