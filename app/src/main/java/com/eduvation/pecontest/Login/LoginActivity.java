@@ -1,5 +1,6 @@
 package com.eduvation.pecontest.Login;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -36,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
 
         setting_view();
         setting_loginbutton();
+        setting_signupbutton();
     }
 
     public void setting_view(){
@@ -66,14 +68,20 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<User> call, Response<User> response) {
                         if(response.isSuccessful()){
+                            Toast.makeText(LoginActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
                             User now_user=response.body();
-                            login_check.setText(now_user.getKey()+"\n"+now_user.getEmail()+"\n"+now_user.getPk());
+                            System.out.println(now_user.getKey());
+                            System.out.println(now_user.getEmail());
+                            System.out.println(now_user.getPk());
+                            System.out.println("=============================");
                             return;
                         }
                     }
 
                     @Override
                     public void onFailure(Call<User> call, Throwable t) {
+                        Toast.makeText(LoginActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
+                        login_check.setVisibility(View.VISIBLE);
                         login_check.setText("이메일/비밀번호를 확인해주세요");
                         login_pwd.setText("");
                         email=null;
@@ -83,5 +91,16 @@ public class LoginActivity extends AppCompatActivity {
                 });
             }
         });
+    }
+
+    public void setting_signupbutton(){
+        signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(LoginActivity.this, SignupActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 }

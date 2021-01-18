@@ -6,6 +6,7 @@ import com.eduvation.pecontest.Class.Competition;
 import com.eduvation.pecontest.Class.Login;
 import com.eduvation.pecontest.Class.NewAttend;
 import com.eduvation.pecontest.Class.PE_average;
+import com.eduvation.pecontest.Class.Register;
 import com.eduvation.pecontest.Class.Total_score;
 import com.eduvation.pecontest.Class.User;
 import com.google.gson.JsonArray;
@@ -58,5 +59,5 @@ public interface RetrofitAPI {
     Call<User> login(@Body Login login);
 
     @POST("accounts/signup/")
-    Call<Void> signup(@Body User user);
+    Call<Void> signup(@Body Register register);
 }

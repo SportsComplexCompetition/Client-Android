@@ -1,6 +1,7 @@
 package com.eduvation.pecontest.Class;
 
 public class User {
+    String sex;
     String key;
     int pk;
     String email;
@@ -81,4 +82,11 @@ public class User {
         this.age = age;
     }
 
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
 }
