@@ -1,21 +1,44 @@
 package com.eduvation.pecontest.Class;
 
 public class User {
+    String key;
     int pk;
     String email;
     String nickname;
     int location;
     int age;
-    String sex;
     public User(){}
 
-    public User(int pk, String email, String nickname, int location, int age, String sex){
+    public User(String key, int pk, String email) {
+        this.key = key;
+        this.pk = pk;
+        this.email = email;
+    }
+
+    public User(String key, int pk, String email, String nickname, int location, int age) {
+        this.key = key;
+        this.pk = pk;
+        this.email = email;
+        this.nickname = nickname;
+        this.location = location;
+        this.age = age;
+    }
+
+    public User(int pk, String email, String nickname, int location, int age){
+
         this.pk=pk;
         this.email=email;
         this.nickname=nickname;
         this.location=location;
         this.age=age;
-        this.sex=sex;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public int getPk() {
@@ -58,11 +81,4 @@ public class User {
         this.age = age;
     }
 
-    public String getSex() {
-        return sex;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
 }

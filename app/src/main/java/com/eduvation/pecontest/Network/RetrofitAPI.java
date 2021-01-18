@@ -3,6 +3,7 @@ package com.eduvation.pecontest.Network;
 import com.eduvation.pecontest.Class.Comment;
 import com.eduvation.pecontest.Class.Communication;
 import com.eduvation.pecontest.Class.Competition;
+import com.eduvation.pecontest.Class.Login;
 import com.eduvation.pecontest.Class.NewAttend;
 import com.eduvation.pecontest.Class.PE_average;
 import com.eduvation.pecontest.Class.Total_score;
@@ -52,4 +53,10 @@ public interface RetrofitAPI {
 
     @GET("data/topavglow/")
     Call<ArrayList<Total_score>> get_topavglow();
+
+    @POST("accounts/signin/")
+    Call<User> login(@Body Login login);
+
+    @POST("accounts/signup/")
+    Call<Void> signup(@Body User user);
 }

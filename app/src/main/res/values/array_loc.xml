@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="location">
-        <item>지역</item>
+        <item>지역 선택</item>
         <item>서울</item>
         <item>대구</item>
         <item>대전</item>
