@@ -60,4 +60,7 @@ public interface RetrofitAPI {
 
     @POST("accounts/signup/")
     Call<Void> signup(@Body Register register);
+
+    @GET("userlist/{pk}/")
+    Call<User> get_login_user(@Path("pk") int pk);
 }

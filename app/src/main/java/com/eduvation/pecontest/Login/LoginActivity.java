@@ -70,10 +70,32 @@ public class LoginActivity extends AppCompatActivity {
                         if(response.isSuccessful()){
                             Toast.makeText(LoginActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
                             User now_user=response.body();
-                            System.out.println(now_user.getKey());
-                            System.out.println(now_user.getEmail());
-                            System.out.println(now_user.getPk());
-                            System.out.println("=============================");
+//                            System.out.println(now_user.getKey());
+//                            System.out.println(now_user.getEmail());
+//                            System.out.println(now_user.getPk());
+//                            System.out.println("=============================");
+                            Call<User> login_infor=myAPI.get_login_user(now_user.getPk());
+                            login_infor.enqueue(new Callback<User>() {
+                                @Override
+                                public void onResponse(Call<User> call, Response<User> response) {
+                                    if(response.isSuccessful()){
+                                        now_user.setNickname(response.body().getNickname());
+                                        now_user.setLocation(response.body().getLocation());
+                                        System.out.println(now_user.getPk());
+                                        System.out.println(now_user.getEmail());
+                                        System.out.println(now_user.getKey());
+                                        System.out.println(now_user.getNickname());
+                                        System.out.println(now_user.getLocation());
+                                        System.out.println("+++++++++++++++++++");
+                                    }
+                                    System.out.println("여기는 어쩌란 말인가");
+                                }
+
+                                @Override
+                                public void onFailure(Call<User> call, Throwable t) {
+                                    System.out.println("로그인 정보 가져오기 실패");
+                                }
+                            });
                             return;
                         }
                     }

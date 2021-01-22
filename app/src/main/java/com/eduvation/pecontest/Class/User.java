@@ -25,6 +25,13 @@ public class User {
         this.age = age;
     }
 
+    public User(int pk, String email, String nickname, int location) {
+        this.pk = pk;
+        this.email = email;
+        this.nickname = nickname;
+        this.location = location;
+    }
+
     public User(int pk, String email, String nickname, int location, int age){
 
         this.pk=pk;
