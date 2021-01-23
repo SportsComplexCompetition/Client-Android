@@ -4,8 +4,8 @@ import com.eduvation.pecontest.Class.Comment;
 import com.eduvation.pecontest.Class.Communication;
 import com.eduvation.pecontest.Class.Competition;
 import com.eduvation.pecontest.Class.Login;
+import com.eduvation.pecontest.Class.Login_User;
 import com.eduvation.pecontest.Class.NewAttend;
-import com.eduvation.pecontest.Class.PE_average;
 import com.eduvation.pecontest.Class.Register;
 import com.eduvation.pecontest.Class.Total_score;
 import com.eduvation.pecontest.Class.User;
@@ -62,5 +62,6 @@ public interface RetrofitAPI {
     Call<Void> signup(@Body Register register);
 
     @GET("userlist/{pk}/")
-    Call<User> get_login_user(@Path("pk") int pk);
+    Call<Login_User> get_login_user(@Path("pk") int pk);
+
 }

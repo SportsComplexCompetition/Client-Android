@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.eduvation.pecontest.Class.Login;
+import com.eduvation.pecontest.Class.Login_User;
 import com.eduvation.pecontest.Class.User;
 import com.eduvation.pecontest.Network.RetrofitAPI;
 import com.eduvation.pecontest.Network.RetrofitClient;
@@ -68,46 +69,35 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<User> call, Response<User> response) {
                         if(response.isSuccessful()){
-                            Toast.makeText(LoginActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
                             User now_user=response.body();
-//                            System.out.println(now_user.getKey());
-//                            System.out.println(now_user.getEmail());
-//                            System.out.println(now_user.getPk());
-//                            System.out.println("=============================");
-                            Call<User> login_infor=myAPI.get_login_user(now_user.getPk());
-                            login_infor.enqueue(new Callback<User>() {
+                            Call<Login_User> get_login=myAPI.get_login_user(now_user.getPk());
+                            get_login.enqueue(new Callback<Login_User>() {
                                 @Override
-                                public void onResponse(Call<User> call, Response<User> response) {
+                                public void onResponse(Call<Login_User> call, Response<Login_User> response) {
                                     if(response.isSuccessful()){
-                                        now_user.setNickname(response.body().getNickname());
+                                        Toast.makeText(LoginActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
                                         now_user.setLocation(response.body().getLocation());
-                                        System.out.println(now_user.getPk());
-                                        System.out.println(now_user.getEmail());
-                                        System.out.println(now_user.getKey());
-                                        System.out.println(now_user.getNickname());
-                                        System.out.println(now_user.getLocation());
-                                        System.out.println("+++++++++++++++++++");
+                                        now_user.setNickname(response.body().getNickname());
+                                        return;
                                     }
-                                    System.out.println("여기는 어쩌란 말인가");
+                                    set_login_statemessage(1);
+                                    return;
                                 }
-
                                 @Override
-                                public void onFailure(Call<User> call, Throwable t) {
-                                    System.out.println("로그인 정보 가져오기 실패");
+                                public void onFailure(Call<Login_User> call, Throwable t) {
+                                    set_login_statemessage(2);
+                                    return;
                                 }
                             });
                             return;
                         }
+                        set_login_statemessage(1);
+                        return;
                     }
 
                     @Override
                     public void onFailure(Call<User> call, Throwable t) {
-                        Toast.makeText(LoginActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
-                        login_check.setVisibility(View.VISIBLE);
-                        login_check.setText("이메일/비밀번호를 확인해주세요");
-                        login_pwd.setText("");
-                        email=null;
-                        password=null;
+                        set_login_statemessage(2);
                         return;
                     }
                 });
@@ -124,5 +114,25 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void set_login_statemessage(int choice){
+        switch(choice){
+            case 1:
+                Toast.makeText(LoginActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
+                login_check.setVisibility(View.VISIBLE);
+                login_check.setText("이메일/비밀번호를 확인해주세요");
+                login_pwd.setText("");
+                email=null;
+                password=null;
+                break;
+            case 2:
+                login_check.setVisibility(View.VISIBLE);
+                login_check.setText("서버 통신 불가");
+                login_pwd.setText("");
+                email=null;
+                password=null;
+                break;
+        }
     }
 }
