@@ -128,7 +128,7 @@ public class AddMatchActivity extends AppCompatActivity {
         ArrayList<Integer> joined=new ArrayList<>();
         joined.add(6);
         Competition competition=new Competition(ManageUser.getInstance().getMe().getNickname(), location-1, -1, 0, pe, title,
-                date, end, people, money, money, 6, null, joined);
+                date, end, people, money, money, 6, joined);
         Call<Void> newmatch=myAPI.make_competition(competition);
         newmatch.enqueue(new Callback<Void>() {
             @Override

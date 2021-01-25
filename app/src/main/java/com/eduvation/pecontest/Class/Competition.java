@@ -4,26 +4,25 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Competition {
-    String host_nickname;
-    int location;
     int id;
+    String host_nickname;
+    int host;
     int comp_type;
+    int location;
     String category;
     String title;
     Date created_at;
     String ended_at;
     int max_people;
+    ArrayList<Integer> joined_people;
     int require_money;
     int total_money;
-    int host;
-    String winner;
-    ArrayList<Integer> joined_people;
 
     public Competition(){
     }
 
 
-    public Competition(String host_nickname, int location, int id, int comp_type, String category, String title, Date created_at, String ended_at, int max_people, int require_money, int total_money, int host, String winner, ArrayList<Integer> joined_people){
+    public Competition(String host_nickname, int location, int id, int comp_type, String category, String title, Date created_at, String ended_at, int max_people, int require_money, int total_money, int host, ArrayList<Integer> joined_people){
         this.host_nickname=host_nickname;
         this.location=location;
         this.id=id;
@@ -36,7 +35,6 @@ public class Competition {
         this.require_money=require_money;
         this.total_money=total_money;
         this.host=host;
-        this.winner=winner;
         this.joined_people=joined_people;
     }
 
@@ -136,13 +134,7 @@ public class Competition {
         this.host = host;
     }
 
-    public String getWinner() {
-        return winner;
-    }
 
-    public void setWinner(String winner) {
-        this.winner = winner;
-    }
 
     public ArrayList<Integer> getJoined_people() {
         return joined_people;

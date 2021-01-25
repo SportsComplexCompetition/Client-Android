@@ -9,15 +9,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.eduvation.pecontest.Adapter.Main_Rank_Adapter;
 import com.eduvation.pecontest.Class.Area_Rank_Data;
 import com.eduvation.pecontest.Class.Comment;
+import com.eduvation.pecontest.Class.Communication;
 import com.eduvation.pecontest.Class.Competition;
 import com.eduvation.pecontest.Class.PE_average;
 import com.eduvation.pecontest.Class.Total_score;
 import com.eduvation.pecontest.Class.User;
+import com.eduvation.pecontest.Login.LoginActivity;
 import com.eduvation.pecontest.Network.RetrofitAPI;
 import com.eduvation.pecontest.Network.RetrofitClient;
 import com.eduvation.pecontest.R;
 import com.eduvation.pecontest.Singleton.ManageAverage;
 import com.eduvation.pecontest.Singleton.ManageComment;
+import com.eduvation.pecontest.Singleton.ManageCommunication;
 import com.eduvation.pecontest.Singleton.ManageCompetition;
 import com.eduvation.pecontest.Singleton.ManageTotalscore;
 import com.eduvation.pecontest.Singleton.ManageUser;
@@ -36,18 +39,18 @@ public class SplashActivity extends AppCompatActivity {
     int location=-1;
     String loc="";
     int mypk=6;
-    int get_match=0, get_comment=0, get_user=0, get_avg=0, get_all=0;
+    int get_match=0, get_communication=0, get_comment=0, get_avg=0, get_all=0;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
 
         myAPI= RetrofitClient.getApiService();
-        getcommentData();
-        getmatchData();
-        getUserData();
-        getAvgData();
-        getTopavglowData();
+        //getcommentData();
+        //getmatchData();
+        getcommunicationData();
+        //getAvgData();
+        //getTopavglowData();
     }
     public void getcommentData(){
         ArrayList<Comment> comment_total=new ArrayList<>();
@@ -61,12 +64,15 @@ public class SplashActivity extends AppCompatActivity {
                     }
                     get_comment=1;
                     ManageComment.getInstance().setComment_total(comment_total);
-                    if(get_comment==1&&get_match==1&&get_user==1&&get_avg==1&&get_all==1){
+                    if(get_comment==1&&get_communication==1&&get_match==1&&get_avg==1&&get_all==1){
                         finish();
-                        startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                        startActivity(new Intent(SplashActivity.this, LoginActivity.class));
                     }
+                    System.out.println("comment success");
                 }
-
+                else{
+                    System.out.println("comment get fail");
+                }
             }
 
             @Override
@@ -116,10 +122,16 @@ public class SplashActivity extends AppCompatActivity {
                     ManageCompetition.getInstance().setMatch_count(count);
                     System.out.println("match success");
                     get_match=1;
-                    if(get_comment==1&&get_match==1&&get_user==1&&get_avg==1&&get_all==1){
+                    get_comment=1;
+                    get_avg=1;
+                    get_all=1;
+                    if(get_comment==1&&get_communication==1&&get_match==1&&get_avg==1&&get_all==1){
                         finish();
-                        startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                        startActivity(new Intent(SplashActivity.this, LoginActivity.class));
                     }
+                }
+                else{
+                    System.out.println("match get fail");
                 }
             }
 
@@ -130,57 +142,36 @@ public class SplashActivity extends AppCompatActivity {
         });
     }
 
-    public void getUserData(){
-        Call<ArrayList<User>> getuser=myAPI.get_user();
-        getuser.enqueue(new Callback<ArrayList<User>>() {
+    public void getcommunicationData(){
+        ArrayList<Communication> total=new ArrayList<>();
+        Call<ArrayList<Communication>> getcommute=myAPI.get_communication();
+        getcommute.enqueue(new Callback<ArrayList<Communication>>() {
             @Override
-            public void onResponse(Call<ArrayList<User>> call, Response<ArrayList<User>> response) {
+            public void onResponse(Call<ArrayList<Communication>> call, Response<ArrayList<Communication>> response) {
                 if(response.isSuccessful()){
-                    for(User item:response.body()){
-                        if(mypk==item.getPk()){
-                            nickname=item.getNickname();
-                            email=item.getEmail();
-                            location=item.getLocation();
-                            switch(location){
-                                case 0:loc="서울";break;
-                                case 1:loc="대구";break;
-                                case 2:loc="대전";break;
-                                case 3:loc="광주";break;
-                                case 4:loc="인천";break;
-                                case 5:loc="부산";break;
-                                case 6:loc="울산";break;
-                                case 7:loc="세종";break;
-                                case 8:loc="제주";break;
-                                case 9:loc="경기";break;
-                                case 10:loc="강원";break;
-                                case 11:loc="충남";break;
-                                case 12:loc="충북";break;
-                                case 13:loc="전남";break;
-                                case 14:loc="전북";break;
-                                case 15:loc="경남";break;
-                                case 16:loc="경북";break;
-                            }
-
-                            ManageUser.getInstance().setMe(item);
-                            break;
-                        }
+                    for(Communication item:response.body()){
+                        total.add(new Communication(item.getPk(), item.getHost_nickname(), item.getHost(), item.getLocation(), item.getTitle(), item.getFind_people(), item.getBody(), item.getCreated_at(), item.getCategory(), item.getAddress()));
                     }
-                    get_user=1;
-                    if(get_comment==1&&get_match==1&&get_user==1&&get_avg==1&&get_all==1){
+                    ManageCommunication.getInstance().setCommunication_total(total);
+                    if(get_comment==1&&get_communication==1&&get_match==1&&get_avg==1&&get_all==1){
                         finish();
-                        startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                        startActivity(new Intent(SplashActivity.this, LoginActivity.class));
                     }
+                    System.out.println("communication success");
+                }
+                else{
+                    System.out.println("communication get fail");
                 }
             }
 
             @Override
-            public void onFailure(Call<ArrayList<User>> call, Throwable t) {
-
+            public void onFailure(Call<ArrayList<Communication>> call, Throwable t) {
+                System.out.println("communication fail");
             }
         });
     }
 
-    public void getAvgData(){
+    public void getAvgData(){//나이대별 종목별 평균 수치
         Call<JsonArray> getavg=myAPI.get_average();
         getavg.enqueue(new Callback<JsonArray>() {
             @Override
@@ -379,13 +370,17 @@ public class SplashActivity extends AppCompatActivity {
 
                     }
                     System.out.println(test.getF25to29().get(0));
+                    System.out.println("avg sucess");
                     ManageAverage.getInstance().setPe_average(test);
                     //System.out.println(ManageAverage.getInstance().getPe_average().getF25to29().get(0));
                     get_avg=1;
-                    if(get_comment==1&&get_match==1&&get_user==1&&get_avg==1&&get_all==1){
+                    if(get_comment==1&&get_communication==1&&get_match==1&&get_avg==1&&get_all==1){
                         finish();
-                        startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                        startActivity(new Intent(SplashActivity.this, LoginActivity.class));
                     }
+                }
+                else{
+                    System.out.println("avg get fail");
                 }
             }
 
@@ -396,7 +391,7 @@ public class SplashActivity extends AppCompatActivity {
             }
         });
     }
-    public void getTopavglowData(){
+    public void getTopavglowData(){//종목별 금, 은, 동, 참가상의 각각 top, average, low
         ArrayList<Total_score> data=new ArrayList<>();
         Call<ArrayList<Total_score>> getall=myAPI.get_topavglow();
         getall.enqueue(new Callback<ArrayList<Total_score>>() {
@@ -408,11 +403,15 @@ public class SplashActivity extends AppCompatActivity {
                         System.out.println(item.getA1()+" "+item.getA2()+" "+item.getGender()+" "+item.getFive_gold_top());
                     }
                     ManageTotalscore.getInstance().setTotal(data);
+                    System.out.println("topavglow success");
                     get_all=1;
-                    if(get_comment==1&&get_match==1&&get_user==1&&get_avg==1&&get_all==1){
+                    if(get_comment==1&&get_communication==1&&get_match==1&&get_avg==1&&get_all==1){
                         finish();
-                        startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                        startActivity(new Intent(SplashActivity.this, LoginActivity.class));
                     }
+                }
+                else{
+                    System.out.println("topavglow get fail");
                 }
             }
 

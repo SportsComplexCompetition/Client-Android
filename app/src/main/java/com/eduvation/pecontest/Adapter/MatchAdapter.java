@@ -142,7 +142,7 @@ public class MatchAdapter extends RecyclerView.Adapter {
                                             ArrayList<Integer> joined=new ArrayList<>();
                                             joined=matches.get(position).getJoined_people();
                                             joined.add(6);
-                                            Competition my=new Competition(matches.get(pos).getHost_nickname(), matches.get(pos).getLocation(), matches.get(pos).getId(), matches.get(pos).getComp_type(), matches.get(pos).getCategory(), matches.get(pos).getTitle(), matches.get(pos).getCreated_at(), matches.get(pos).getEnded_at(), matches.get(pos).getMax_people(), matches.get(pos).getRequire_money(), matches.get(position).getRequire_money()*(matches.get(position).getJoined_people().size()+1), matches.get(pos).getHost(), matches.get(pos).getWinner(), joined);
+                                            Competition my=new Competition(matches.get(pos).getHost_nickname(), matches.get(pos).getLocation(), matches.get(pos).getId(), matches.get(pos).getComp_type(), matches.get(pos).getCategory(), matches.get(pos).getTitle(), matches.get(pos).getCreated_at(), matches.get(pos).getEnded_at(), matches.get(pos).getMax_people(), matches.get(pos).getRequire_money(), matches.get(position).getRequire_money()*(matches.get(position).getJoined_people().size()+1), matches.get(pos).getHost(), joined);
                                             ((MainActivity)MainActivity.main_context).fragment4.myadapter.addnewItem(my);
 
                                         }
