@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.eduvation.pecontest.Activity.MainActivity;
 import com.eduvation.pecontest.Class.Login;
 import com.eduvation.pecontest.Class.Login_User;
 import com.eduvation.pecontest.Class.User;
@@ -65,6 +66,8 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 Login now_login=new Login(email, password);
                 Call<User> login=myAPI.login(now_login);
+                System.out.println(email+"---");
+                System.out.println(password+"---");
                 login.enqueue(new Callback<User>() {
                     @Override
                     public void onResponse(Call<User> call, Response<User> response) {
@@ -78,10 +81,12 @@ public class LoginActivity extends AppCompatActivity {
                                         Toast.makeText(LoginActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
                                         now_user.setLocation(response.body().getLocation());
                                         now_user.setNickname(response.body().getNickname());
+                                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                    }
+                                    else{
+                                        set_login_statemessage(1);
                                         return;
                                     }
-                                    set_login_statemessage(1);
-                                    return;
                                 }
                                 @Override
                                 public void onFailure(Call<Login_User> call, Throwable t) {

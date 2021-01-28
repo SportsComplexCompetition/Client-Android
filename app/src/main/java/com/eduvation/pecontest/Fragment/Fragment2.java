@@ -23,6 +23,7 @@ import com.eduvation.pecontest.Class.Communication;
 import com.eduvation.pecontest.Network.RetrofitAPI;
 import com.eduvation.pecontest.Network.RetrofitClient;
 import com.eduvation.pecontest.R;
+import com.eduvation.pecontest.Singleton.ManageCommunication;
 
 import java.util.ArrayList;
 
@@ -71,24 +72,10 @@ public class Fragment2 extends Fragment {
         back_img.add(R.drawable.photo4);
 
         total=new ArrayList<>();
+        total= ManageCommunication.getInstance().getCommunication_total();
+        setting_recyclerview();
         myAPI= RetrofitClient.getApiService();
-        Call<ArrayList<Communication>> getcommute=myAPI.get_communication();
-        getcommute.enqueue(new Callback<ArrayList<Communication>>() {
-            @Override
-            public void onResponse(Call<ArrayList<Communication>> call, Response<ArrayList<Communication>> response) {
-                if(response.isSuccessful()){
-                    for(Communication item:response.body()){
-                        total.add(new Communication(item.getPk(), item.getHost_nickname(), item.getHost(), item.getLocation(), item.getTitle(), item.getFind_people(), item.getBody(), item.getCreated_at(), item.getCategory(), item.getAddress()));
-                    }
-                    setting_recyclerview();
-                }
-            }
 
-            @Override
-            public void onFailure(Call<ArrayList<Communication>> call, Throwable t) {
-                System.out.println("communication fail");
-            }
-        });
         choose=new ArrayList<>();
     }
     public void setting_recyclerview(){

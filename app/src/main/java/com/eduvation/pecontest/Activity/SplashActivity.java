@@ -35,51 +35,17 @@ import retrofit2.Response;
 
 public class SplashActivity extends AppCompatActivity {
     RetrofitAPI myAPI;
-    String nickname="", email="";
-    int location=-1;
-    String loc="";
-    int mypk=6;
-    int get_match=0, get_communication=0, get_comment=0, get_avg=0, get_all=0;
+    int get_match=0, get_communication=0, get_avg=0, get_all=0;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
 
         myAPI= RetrofitClient.getApiService();
-        //getcommentData();
-        //getmatchData();
+        getmatchData();
         getcommunicationData();
-        //getAvgData();
-        //getTopavglowData();
-    }
-    public void getcommentData(){
-        ArrayList<Comment> comment_total=new ArrayList<>();
-        Call<ArrayList<Comment>> getcomment=myAPI.get_comment();
-        getcomment.enqueue(new Callback<ArrayList<Comment>>() {
-            @Override
-            public void onResponse(Call<ArrayList<Comment>> call, Response<ArrayList<Comment>> response) {
-                if(response.isSuccessful()){
-                    for(Comment item:response.body()){
-                        comment_total.add(item);
-                    }
-                    get_comment=1;
-                    ManageComment.getInstance().setComment_total(comment_total);
-                    if(get_comment==1&&get_communication==1&&get_match==1&&get_avg==1&&get_all==1){
-                        finish();
-                        startActivity(new Intent(SplashActivity.this, LoginActivity.class));
-                    }
-                    System.out.println("comment success");
-                }
-                else{
-                    System.out.println("comment get fail");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<Comment>> call, Throwable t) {
-                System.out.println("comment fail");
-            }
-        });
+        getAvgData();
+        getTopavglowData();
     }
 
     public void getmatchData(){
@@ -122,10 +88,7 @@ public class SplashActivity extends AppCompatActivity {
                     ManageCompetition.getInstance().setMatch_count(count);
                     System.out.println("match success");
                     get_match=1;
-                    get_comment=1;
-                    get_avg=1;
-                    get_all=1;
-                    if(get_comment==1&&get_communication==1&&get_match==1&&get_avg==1&&get_all==1){
+                    if(get_communication==1&&get_match==1&&get_avg==1&&get_all==1){
                         finish();
                         startActivity(new Intent(SplashActivity.this, LoginActivity.class));
                     }
@@ -153,7 +116,8 @@ public class SplashActivity extends AppCompatActivity {
                         total.add(new Communication(item.getPk(), item.getHost_nickname(), item.getHost(), item.getLocation(), item.getTitle(), item.getFind_people(), item.getBody(), item.getCreated_at(), item.getCategory(), item.getAddress()));
                     }
                     ManageCommunication.getInstance().setCommunication_total(total);
-                    if(get_comment==1&&get_communication==1&&get_match==1&&get_avg==1&&get_all==1){
+                    get_communication=1;
+                    if(get_communication==1&&get_match==1&&get_avg==1&&get_all==1){
                         finish();
                         startActivity(new Intent(SplashActivity.this, LoginActivity.class));
                     }
@@ -374,7 +338,7 @@ public class SplashActivity extends AppCompatActivity {
                     ManageAverage.getInstance().setPe_average(test);
                     //System.out.println(ManageAverage.getInstance().getPe_average().getF25to29().get(0));
                     get_avg=1;
-                    if(get_comment==1&&get_communication==1&&get_match==1&&get_avg==1&&get_all==1){
+                    if(get_communication==1&&get_match==1&&get_avg==1&&get_all==1){
                         finish();
                         startActivity(new Intent(SplashActivity.this, LoginActivity.class));
                     }
@@ -405,7 +369,7 @@ public class SplashActivity extends AppCompatActivity {
                     ManageTotalscore.getInstance().setTotal(data);
                     System.out.println("topavglow success");
                     get_all=1;
-                    if(get_comment==1&&get_communication==1&&get_match==1&&get_avg==1&&get_all==1){
+                    if(get_communication==1&&get_match==1&&get_avg==1&&get_all==1){
                         finish();
                         startActivity(new Intent(SplashActivity.this, LoginActivity.class));
                     }
