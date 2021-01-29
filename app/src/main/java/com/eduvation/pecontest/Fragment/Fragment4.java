@@ -67,7 +67,7 @@ public class Fragment4 extends Fragment {
     ArrayList<Integer> img=null;
     ArrayList<Competition> my_comp=null;
     public MyMatchAdapter myadapter=null;
-    int mypk=6;
+    int mypk;
     int g=0;
     User my=null;
     RetrofitAPI myAPI;
@@ -116,6 +116,7 @@ public class Fragment4 extends Fragment {
         male.setBackgroundResource(R.drawable.color_round_layout);
         female.setTextColor(Color.parseColor("#0C2A55"));
         female.setBackgroundResource(R.drawable.round_btn);
+        mypk=ManageUser.getInstance().getMe().getPk();
 
         after_check_layout=v.findViewById(R.id.after_check_layout);
         check_c1=v.findViewById(R.id.check_c1);
@@ -132,7 +133,7 @@ public class Fragment4 extends Fragment {
         total_rank=v.findViewById(R.id.total_rank);
         recheck=v.findViewById(R.id.recheck_btn);
 
-//        getting_myinfo();
+        getting_myinfo();
         setting_gender_btn();
         setting_average();
         setting_recyclerview();
@@ -146,49 +147,6 @@ public class Fragment4 extends Fragment {
     }
 
     public void getting_myinfo(){
-//        myAPI= RetrofitClient.getApiService();
-//        Call<ArrayList<User>> getuser=myAPI.get_user();
-//        getuser.enqueue(new Callback<ArrayList<User>>() {
-//            @Override
-//            public void onResponse(Call<ArrayList<User>> call, Response<ArrayList<User>> response) {
-//                if(response.isSuccessful()){
-//                    for(User item:response.body()){
-//                        if(mypk==item.getPk()){
-//                            nickname=item.getNickname();
-//                            email=item.getEmail();
-//                            location=item.getLocation();
-//                            switch(location){
-//                                case 0:loc="서울";break;
-//                                case 1:loc="대구";break;
-//                                case 2:loc="대전";break;
-//                                case 3:loc="광주";break;
-//                                case 4:loc="인천";break;
-//                                case 5:loc="부산";break;
-//                                case 6:loc="울산";break;
-//                                case 7:loc="세종";break;
-//                                case 8:loc="제주";break;
-//                                case 9:loc="경기";break;
-//                                case 10:loc="강원";break;
-//                                case 11:loc="충남";break;
-//                                case 12:loc="충북";break;
-//                                case 13:loc="전남";break;
-//                                case 14:loc="전북";break;
-//                                case 15:loc="경남";break;
-//                                case 16:loc="경북";break;
-//                            }
-//                            my_name.setText(nickname);
-//                            my_email.setText(email);
-//                            break;
-//                        }
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ArrayList<User>> call, Throwable t) {
-//
-//            }
-//        });
         my=new User();
         my= ManageUser.getInstance().getMe();
         nickname=my.getNickname();
@@ -218,14 +176,16 @@ public class Fragment4 extends Fragment {
         my_email.setText(email);
         my_location.setText(loc);
         my_age.setText(myage+"세");
-        if(my.getSex().equals("male")){
-            my_gender.setText("남자");
-            g=0;
-        }
-        else if(my.getSex().equals("female")){
-            my_gender.setText("여자");
-            g=1;
-        }
+//        if(my.getSex().equals("male")){
+//            my_gender.setText("남자");
+//            g=0;
+//        }
+//        else if(my.getSex().equals("female")){
+//            my_gender.setText("여자");
+//            g=1;
+//        }
+        g=0;
+        my_gender.setText("남자");
         analysis=new Total_score();
         ArrayList<Total_score> all=new ArrayList<>();
         all= ManageTotalscore.getInstance().getTotal();

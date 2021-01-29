@@ -5,6 +5,7 @@ import com.eduvation.pecontest.Class.Communication;
 import com.eduvation.pecontest.Class.Competition;
 import com.eduvation.pecontest.Class.Login;
 import com.eduvation.pecontest.Class.Login_User;
+import com.eduvation.pecontest.Class.MyCompetition;
 import com.eduvation.pecontest.Class.NewAttend;
 import com.eduvation.pecontest.Class.Register;
 import com.eduvation.pecontest.Class.Total_score;
@@ -35,9 +36,6 @@ public interface RetrofitAPI {
     @POST("meetinglist/")
     Call<Void> make_communication(@Body Communication meeting);
 
-    @GET("commentlist/")
-    Call<ArrayList<Comment>> get_comment();
-
     @POST("commentlist/")
     Call<Void> send_comment(@Body Comment comment);
 
@@ -49,9 +47,6 @@ public interface RetrofitAPI {
 
     @PUT("competitions/join/{pk}")
     Call<Void> join_competition(@Path("pk") int pk, @Body NewAttend newAttend);
-
-    @GET("userlist/")
-    Call<ArrayList<User>> get_user();
 
     @GET("data/average/")
     Call<JsonArray> get_average();
@@ -69,4 +64,7 @@ public interface RetrofitAPI {
     Call<Login_User> get_login_user(@Header("Authorization") String header, @Path("pk") int pk);
     //need Header token authorization
     //if there's no header token, get 401 code error
+
+    @GET("accounts/mycomplist")
+    Call<ArrayList<MyCompetition>> get_my_competition(@Header("Authorization") String header);
 }

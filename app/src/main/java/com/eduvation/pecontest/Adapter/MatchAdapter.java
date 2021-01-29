@@ -29,6 +29,7 @@ import com.eduvation.pecontest.Network.RetrofitAPI;
 import com.eduvation.pecontest.Network.RetrofitClient;
 import com.eduvation.pecontest.R;
 import com.eduvation.pecontest.Singleton.ManageTotalscore;
+import com.eduvation.pecontest.Singleton.ManageUser;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,10 +39,12 @@ public class MatchAdapter extends RecyclerView.Adapter {
     ArrayList<Integer> img=null;
     ArrayList<Competition> matches=null;
     Context context;
+    int login_pk;
     public MatchAdapter(ArrayList<Competition> matches, ArrayList<Integer> img, Context context){
         this.matches=matches;
         this.img=img;
         this.context=context;
+        login_pk=ManageUser.getInstance().getMe().getPk();
     }
     public static class MatchViewHolder extends RecyclerView.ViewHolder{
         ImageView match_img;
@@ -108,12 +111,12 @@ public class MatchAdapter extends RecyclerView.Adapter {
         vh.match_location.setText(loc);
         vh.match_host.setText(matches.get(position).getHost_nickname()+"\n주최");
         for(int i=0; i<matches.get(position).getJoined_people().size(); i++){
-            if(6==matches.get(position).getJoined_people().get(i)){
+            if(this.login_pk==matches.get(position).getJoined_people().get(i)){
                 vh.match_attend_btn.setText("참여중");
                 vh.match_attend_btn.setBackground(ContextCompat.getDrawable(context, R.drawable.attend_btn));
             }
         }
-        if(6==matches.get(position).getHost()){
+        if(this.login_pk==matches.get(position).getHost()){
             vh.match_attend_btn.setText("참여중");
             vh.match_attend_btn.setBackground(ContextCompat.getDrawable(context, R.drawable.attend_btn));
         }
@@ -129,27 +132,31 @@ public class MatchAdapter extends RecyclerView.Adapter {
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();
                                     RetrofitAPI myAPI= RetrofitClient.getApiService();
-                                    NewAttend attend=new NewAttend(6, matches.get(pos).getRequire_money());
+                                    NewAttend attend=new NewAttend(login_pk, matches.get(pos).getRequire_money());
                                     Call<Void> newattend=myAPI.join_competition(matches.get(pos).getId(), attend);
 //                                    Call<Void> newattend=myAPI.join_competition(1, attend);
                                     newattend.enqueue(new Callback<Void>() {
                                         @Override
                                         public void onResponse(Call<Void> call, Response<Void> response) {
-                                            vh.match_attend_btn.setText("참여중");
-                                            vh.match_attend_btn.setBackground(ContextCompat.getDrawable(context, R.drawable.attend_btn));
-                                            vh.match_people.setText("참가자"+(matches.get(position).getJoined_people().size()+1)+"명/"+matches.get(position).getMax_people()+"명");
-                                            vh.match_money_total.setText("누적금액"+matches.get(position).getRequire_money()*(matches.get(position).getJoined_people().size()+1)+"원");
-                                            ArrayList<Integer> joined=new ArrayList<>();
-                                            joined=matches.get(position).getJoined_people();
-                                            joined.add(6);
-                                            Competition my=new Competition(matches.get(pos).getHost_nickname(), matches.get(pos).getLocation(), matches.get(pos).getId(), matches.get(pos).getComp_type(), matches.get(pos).getCategory(), matches.get(pos).getTitle(), matches.get(pos).getCreated_at(), matches.get(pos).getEnded_at(), matches.get(pos).getMax_people(), matches.get(pos).getRequire_money(), matches.get(position).getRequire_money()*(matches.get(position).getJoined_people().size()+1), matches.get(pos).getHost(), joined);
-                                            ((MainActivity)MainActivity.main_context).fragment4.myadapter.addnewItem(my);
-
+                                            if(response.isSuccessful()){
+                                                vh.match_attend_btn.setText("참여중");
+                                                vh.match_attend_btn.setBackground(ContextCompat.getDrawable(context, R.drawable.attend_btn));
+                                                vh.match_people.setText("참가자"+(matches.get(position).getJoined_people().size()+1)+"명/"+matches.get(position).getMax_people()+"명");
+                                                vh.match_money_total.setText("누적금액"+matches.get(position).getRequire_money()*(matches.get(position).getJoined_people().size()+1)+"원");
+                                                ArrayList<Integer> joined=new ArrayList<>();
+                                                joined=matches.get(position).getJoined_people();
+                                                joined.add(login_pk);
+                                                Competition my=new Competition(matches.get(pos).getHost_nickname(), matches.get(pos).getLocation(), matches.get(pos).getId(), matches.get(pos).getComp_type(), matches.get(pos).getCategory(), matches.get(pos).getTitle(), matches.get(pos).getCreated_at(), matches.get(pos).getEnded_at(), matches.get(pos).getMax_people(), matches.get(pos).getRequire_money(), matches.get(position).getRequire_money()*(matches.get(position).getJoined_people().size()+1), matches.get(pos).getHost(), joined);
+                                                ((MainActivity)MainActivity.main_context).fragment4.myadapter.addnewItem(my);
+                                            }
+                                            else{
+                                                System.out.println(response);
+                                            }
                                         }
 
                                         @Override
                                         public void onFailure(Call<Void> call, Throwable t) {
-
+                                            System.out.println(t);
                                         }
                                     });
                                 }

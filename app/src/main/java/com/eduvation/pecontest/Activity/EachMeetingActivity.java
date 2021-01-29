@@ -36,14 +36,14 @@ import retrofit2.Response;
 
 public class EachMeetingActivity extends AppCompatActivity {
     ImageView each_img;
-    TextView each_title, each_loc_address, each_people, each_body, each_date, each_name, each_category;
+    TextView each_title, each_loc_address, each_body, each_date, each_name, each_category;
     RecyclerView each_comment_recycle;
     TextView no_comment;
     EditText edit_comment;
     ImageView comment_btn;
     Intent intent;
     String title, location, body, address, date, name, category;
-    int people, pk;
+    int pk;
     Context each_context;
 
     RetrofitAPI myAPI;
@@ -71,7 +71,6 @@ public class EachMeetingActivity extends AppCompatActivity {
         each_img=findViewById(R.id.each_img);
         each_title=findViewById(R.id.each_title);
         each_loc_address=findViewById(R.id.each_loc_address);
-        each_people=findViewById(R.id.each_people);
         each_body=findViewById(R.id.each_body);
         each_date=findViewById(R.id.each_date);
         each_name=findViewById(R.id.each_name);
@@ -89,14 +88,12 @@ public class EachMeetingActivity extends AppCompatActivity {
         address=intent.getStringExtra("address");
         date=intent.getStringExtra("date");
         pk=intent.getIntExtra("pk", -1);
-        people=intent.getIntExtra("people", 0);
         name=intent.getStringExtra("nickname");
         category=intent.getStringExtra("category");
 
         Glide.with(each_context).load(intent.getIntExtra("img", 0)).into(each_img);
         each_title.setText(title);
         each_loc_address.setText(location+" "+address);
-        each_people.setText(people+"명 참여중");
         each_body.setText(body);
         each_date.setText("SINCE "+date);
         each_name.setText(name);

@@ -14,9 +14,11 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.eduvation.pecontest.Activity.MainActivity;
 import com.eduvation.pecontest.Activity.MatchCertificateActivity;
 import com.eduvation.pecontest.Class.Competition;
 import com.eduvation.pecontest.R;
+import com.eduvation.pecontest.Singleton.ManageUser;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -116,6 +118,9 @@ public class MyMatchAdapter extends RecyclerView.Adapter {
             matches=new ArrayList<>();
         }
         matches.add(c);
+        if(matches.size()==1){
+            ((MainActivity) MainActivity.main_context).fragment4.addnewMatch();
+        }
         notifyDataSetChanged();
     }
 }

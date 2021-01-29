@@ -15,11 +15,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.eduvation.pecontest.Activity.MainActivity;
 import com.eduvation.pecontest.Class.Login;
 import com.eduvation.pecontest.Class.Login_User;
+import com.eduvation.pecontest.Class.MyCompetition;
 import com.eduvation.pecontest.Class.User;
 import com.eduvation.pecontest.Network.RetrofitAPI;
 import com.eduvation.pecontest.Network.RetrofitClient;
 import com.eduvation.pecontest.R;
+import com.eduvation.pecontest.Singleton.ManageMyCompetition;
+import com.eduvation.pecontest.Singleton.ManageUser;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
     Button login;
     TextView signup, login_check;
     String email=null, password=null;
+    int login_info, comp;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +56,9 @@ public class LoginActivity extends AppCompatActivity {
         login=findViewById(R.id.login_btn);
         signup=findViewById(R.id.to_register);
         login_check=findViewById(R.id.login_check);
+
+        login_info=0;
+        comp=0;
     }
 
     public void setting_loginbutton(){
@@ -86,8 +94,13 @@ public class LoginActivity extends AppCompatActivity {
                                     if(response.isSuccessful()){
                                         now_user.setLocation(response.body().getLocation());
                                         now_user.setNickname(response.body().getNickname());
-                                        finish();
-                                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                        ManageUser.getInstance().setMe(now_user);
+                                        login_info=1;
+                                        comp=1;
+                                        if(login_info==1&&comp==1){
+                                            finish();
+                                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                        }
                                     }
                                     else{
                                         System.out.println(response);
@@ -102,10 +115,41 @@ public class LoginActivity extends AppCompatActivity {
                                     return;
                                 }
                             });
+
+//                            ArrayList<MyCompetition> total=new ArrayList<>();
+//                            Call<ArrayList<MyCompetition>> get_my_competition=myAPI.get_my_competition("Token "+now_user.getKey());
+//                            get_my_competition.enqueue(new Callback<ArrayList<MyCompetition>>() {
+//                                @Override
+//                                public void onResponse(Call<ArrayList<MyCompetition>> call, Response<ArrayList<MyCompetition>> response) {
+//                                    if(response.isSuccessful()){
+//                                        for(MyCompetition item:response.body()){
+//                                            total.add(item);
+//                                        }
+//                                        ManageMyCompetition.getInstance().setMyCompetition_total(total);
+//                                        comp=1;
+//                                        if(login_info==1&&comp==1){
+//                                            finish();
+//                                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+//                                        }
+//                                    }
+//                                    else{
+//                                        set_login_statemessage(1);
+//                                        return;
+//                                    }
+//                                }
+//
+//                                @Override
+//                                public void onFailure(Call<ArrayList<MyCompetition>> call, Throwable t) {
+//                                    set_login_statemessage(2);
+//                                    return;
+//                                }
+//                            });
+
+                        }
+                        else{
+                            set_login_statemessage(1);
                             return;
                         }
-                        set_login_statemessage(1);
-                        return;
                     }
 
                     @Override

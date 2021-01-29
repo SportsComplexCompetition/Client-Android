@@ -33,14 +33,13 @@ public class Communicate_Adapter extends RecyclerView.Adapter {
     }
     public static class CommunicationViewHolder extends RecyclerView.ViewHolder{
         ImageView img;
-        TextView title, location, people;
+        TextView title, location;
         CardView card;
         public CommunicationViewHolder(@NonNull View itemView) {
             super(itemView);
             img=itemView.findViewById(R.id.commute_background);
             title=itemView.findViewById(R.id.commute_title);
             location=itemView.findViewById(R.id.commute_location);
-            people=itemView.findViewById(R.id.commute_people);
             card=itemView.findViewById(R.id.card);
         }
     }
@@ -81,7 +80,6 @@ public class Communicate_Adapter extends RecyclerView.Adapter {
             case 16:loc="경북";break;
         }
         vh.location.setText(loc);
-        vh.people.setText(data.get(position).getFind_people()+"명 참여중");
 
         final int pos=position;
         final String ll=loc;
@@ -94,7 +92,6 @@ public class Communicate_Adapter extends RecyclerView.Adapter {
                 intent.putExtra("location", ll);
                 intent.putExtra("body", data.get(pos).getBody());
                 intent.putExtra("address", data.get(pos).getAddress());
-                intent.putExtra("people", data.get(pos).getFind_people());
                 intent.putExtra("img", R.drawable.photo1);
                 intent.putExtra("category", data.get(pos).getCategory());
                 Date date=data.get(pos).getCreated_at();

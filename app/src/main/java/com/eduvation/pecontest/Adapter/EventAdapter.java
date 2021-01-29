@@ -25,6 +25,7 @@ import com.eduvation.pecontest.Class.NewAttend;
 import com.eduvation.pecontest.Network.RetrofitAPI;
 import com.eduvation.pecontest.Network.RetrofitClient;
 import com.eduvation.pecontest.R;
+import com.eduvation.pecontest.Singleton.ManageUser;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,10 +35,12 @@ public class EventAdapter extends RecyclerView.Adapter {
     ArrayList<Integer> img=null;
     ArrayList<Competition> events=null;
     Context context;
+    int login_pk;
     public EventAdapter(ArrayList<Competition> events, ArrayList<Integer> img, Context context){
         this.events=events;
         this.img=img;
         this.context=context;
+        login_pk= ManageUser.getInstance().getMe().getPk();
     }
     public static class EventViewHolder extends RecyclerView.ViewHolder{
         ImageView event_img;
@@ -79,12 +82,12 @@ public class EventAdapter extends RecyclerView.Adapter {
         vh.event_money.setText("참가비"+events.get(position).getRequire_money()+"원");
         vh.event_total_money.setText("누적금액"+events.get(position).getTotal_money()+"원");
         for(int i=0; i<events.get(position).getJoined_people().size(); i++){
-            if(6==events.get(position).getJoined_people().get(i)){
+            if(login_pk==events.get(position).getJoined_people().get(i)){
                 vh.event_attend_btn.setText("참여중");
                 vh.event_attend_btn.setBackground(ContextCompat.getDrawable(context, R.drawable.attend_btn));
             }
         }
-        if(6==events.get(position).getHost()){
+        if(login_pk==events.get(position).getHost()){
             vh.event_attend_btn.setText("참여중");
             vh.event_attend_btn.setBackground(ContextCompat.getDrawable(context, R.drawable.attend_btn));
         }
@@ -100,21 +103,25 @@ public class EventAdapter extends RecyclerView.Adapter {
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();
                                     RetrofitAPI myAPI= RetrofitClient.getApiService();
-                                    NewAttend attend=new NewAttend(6, events.get(pos).getRequire_money());
+                                    NewAttend attend=new NewAttend(login_pk, events.get(pos).getRequire_money());
                                     Call<Void> newattend=myAPI.join_competition(events.get(pos).getId(), attend);
 //                                    Call<Void> newattend=myAPI.join_competition(1, attend);
                                     newattend.enqueue(new Callback<Void>() {
                                         @Override
                                         public void onResponse(Call<Void> call, Response<Void> response) {
-                                            vh.event_attend_btn.setText("참여중");
-                                            vh.event_attend_btn.setBackground(ContextCompat.getDrawable(context, R.drawable.attend_btn));
-                                            vh.event_people.setText(events.get(pos).getJoined_people().size()+1+"명 참여중");
-                                            vh.event_total_money.setText("누적금액"+events.get(position).getRequire_money()*(events.get(position).getJoined_people().size()+1)+"원");
+                                            if(response.isSuccessful()){
+                                                vh.event_attend_btn.setText("참여중");
+                                                vh.event_attend_btn.setBackground(ContextCompat.getDrawable(context, R.drawable.attend_btn));
+                                                vh.event_people.setText(events.get(pos).getJoined_people().size()+1+"명 참여중");
+                                                vh.event_total_money.setText("누적금액"+events.get(position).getRequire_money()*(events.get(position).getJoined_people().size()+1)+"원");
+                                            }
+                                            else{
+                                                System.out.println(response);
+                                            }
                                         }
-
                                         @Override
                                         public void onFailure(Call<Void> call, Throwable t) {
-
+                                            System.out.println(t);
                                         }
                                     });
                                 }
