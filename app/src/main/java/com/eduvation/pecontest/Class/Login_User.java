@@ -5,12 +5,16 @@ public class Login_User {
     String email;
     String nickname;
     int location;
+    int age;
+    String sex;
 
-    public Login_User(int pk, String email, String nickname, int location) {
+    public Login_User(int pk, String email, String nickname, int location, int age, String sex) {
         this.pk = pk;
         this.email = email;
         this.nickname = nickname;
         this.location = location;
+        this.age=age;
+        this.sex=sex;
     }
 
     public int getPk() {
@@ -43,5 +47,21 @@ public class Login_User {
 
     public void setLocation(int location) {
         this.location = location;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 }

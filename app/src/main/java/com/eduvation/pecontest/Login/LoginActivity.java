@@ -20,6 +20,9 @@ import com.eduvation.pecontest.Network.RetrofitAPI;
 import com.eduvation.pecontest.Network.RetrofitClient;
 import com.eduvation.pecontest.R;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -73,17 +76,22 @@ public class LoginActivity extends AppCompatActivity {
                     public void onResponse(Call<User> call, Response<User> response) {
                         if(response.isSuccessful()){
                             User now_user=response.body();
-                            Call<Login_User> get_login=myAPI.get_login_user(now_user.getPk());
+                            System.out.println("1차 로그인 성공");
+                            System.out.println(now_user.getKey());
+
+                            //token shape is "Token ab~~~"
+                            Call<Login_User> get_login=myAPI.get_login_user("Token "+now_user.getKey(), now_user.getPk());
                             get_login.enqueue(new Callback<Login_User>() {
                                 @Override
                                 public void onResponse(Call<Login_User> call, Response<Login_User> response) {
                                     if(response.isSuccessful()){
-                                        Toast.makeText(LoginActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
                                         now_user.setLocation(response.body().getLocation());
                                         now_user.setNickname(response.body().getNickname());
+                                        finish();
                                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                     }
                                     else{
+                                        System.out.println(response);
                                         set_login_statemessage(1);
                                         return;
                                     }
@@ -91,6 +99,7 @@ public class LoginActivity extends AppCompatActivity {
                                 @Override
                                 public void onFailure(Call<Login_User> call, Throwable t) {
                                     set_login_statemessage(2);
+                                    System.out.println(t);
                                     return;
                                 }
                             });

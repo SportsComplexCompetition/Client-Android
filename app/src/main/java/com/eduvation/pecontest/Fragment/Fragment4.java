@@ -132,7 +132,7 @@ public class Fragment4 extends Fragment {
         total_rank=v.findViewById(R.id.total_rank);
         recheck=v.findViewById(R.id.recheck_btn);
 
-        getting_myinfo();
+//        getting_myinfo();
         setting_gender_btn();
         setting_average();
         setting_recyclerview();
