@@ -77,6 +77,7 @@ public class LoginActivity extends AppCompatActivity {
                         if(response.isSuccessful()){
                             User now_user=response.body();
                             System.out.println("1차 로그인 성공");
+
                             //token shape is "Token ab~~~"
                             Call<Login_User> get_login=myAPI.get_login_user("Token "+now_user.getKey(), now_user.getPk());
                             get_login.enqueue(new Callback<Login_User>() {
