@@ -43,3 +43,7 @@
 그 정보를 바탕으로 개인별의 체력 수준, 건강 수치를 제공 및 비교해주고<br>
 체력 증진 활동의 재미를 추가하기 위하여 다른 사람들과 경쟁 또는 소모임을 비대면으로 공유하고 가질 수 있도록<br>
 이와 같은 데이터 활용 비대면 플랫폼을 만들었습니다.
+
+## 8. 앱 이미지
+![wehealth1](https://user-images.githubusercontent.com/17876424/114311062-31b6e900-9b28-11eb-99f6-ff063aa701d4.PNG)
+![wehealth2](https://user-images.githubusercontent.com/17876424/114311072-37acca00-9b28-11eb-8eb6-1b5522623940.PNG)
